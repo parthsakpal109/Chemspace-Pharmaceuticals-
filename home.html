@@ -1,20 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="description" content="Your Company - Leading manufacturer and supplier of chemicals.">
-    <meta name="keywords" content="chemicals, custom synthesis, bulk supply, research">
-    <meta name="author" content="Your Company">
+  <meta name="description" content="Your Company - Leading manufacturer and supplier of chemicals.">
+  <meta name="keywords" content="chemicals, custom synthesis, bulk supply, research">
+  <meta name="author" content="Your Company">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Header</title>
+  <link rel="stylesheet" href="style.css"> 
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Your Company</title>
-    <link rel="stylesheet" href="style.css"> <!-- Link to CSS -->
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
-    </style>
+    /* Purple-themed styles */
+    body {
+      font-family: 'Work Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #6a0dad;
+      padding: 10px 20px;
+    }
+
+    .logo img {
+      height: 50px;
+    }
+
+    .menu {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      padding: 10px 15px;
+    }
+
+    .menu li a:hover {
+      background-color: #8a2be2;
+      border-radius: 5px;
+    }
+
+    .hero {
+      background-color: #dcd0ff;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .hero h1 {
+      color: #4b0082;
+    }
+
+    .hero p {
+      color: #6a0dad;
+      font-size: 18px;
+    }
+
+    .search-bar input, .search-bar button {
+      padding: 10px;
+      margin: 5px;
+      border: 2px solid #6a0dad;
+      border-radius: 5px;
+    }
+
+    .search-bar button {
+      background-color: #6a0dad;
+      color: white;
+      font-weight: bold;
+    }
+
+    .about-content h2, .services h2, .contact h2 {
+      text-align: center;
+      color: #6a0dad;
+    }
+
+    .services {
+      background-color: #f2e9ff;
+      padding: 20px;
+    }
+
+    .contact form button {
+      background-color: #6a0dad;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    footer {
+      background-color: #4b0082;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    /* AI Assistant Styling */
+    .ai-assistant {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #8a2be2, #6a0dad);
+      box-shadow: 0 0 10px rgba(138, 43, 226, 0.7), 0 0 20px rgba(138, 43, 226, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      animation: pulse 1.5s infinite;
+      z-index: 1000;
+      font-family: 'Work Sans', sans-serif;
+      font-weight: 600;
+      color: white;
+      font-size: 18px;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(138, 43, 226, 0.7), 0 0 20px rgba(138, 43, 226, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 15px rgba(138, 43, 226, 1), 0 0 30px rgba(138, 43, 226, 0.8);
+      }
+    }
+
+    .ai-popup {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 300px;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 1001;
+    }
+
+    .ai-popup header {
+      font-weight: 600;
+      color: #6a0dad;
+      margin-bottom: 10px;
+    }
+
+    .ai-popup button {
+      background-color: #6a0dad;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-<!-- Navigation Bar -->
 <header>
     <nav>
         <div class="logo">
@@ -30,7 +177,6 @@
     </nav>
 </header>
 
-<!-- Hero Section -->
 <section class="hero">
     <h1>Your Company Private Limited</h1>
     <p>A one-stop destination for all your research needs</p>
@@ -40,24 +186,13 @@
     </div>
 </section>
 
-<!-- About Us Section -->
 <section id="about" class="about">
     <div class="about-content">
         <h2>About Us</h2>
-        <div class="about-details">
-            <div class="founder">
-                <img src="founder.jpg" alt="Founder">
-                <h3>Mr. Sameer Kadam</h3>
-                <p>Former Director of the Indian Institute of Chemical Technology</p>
-            </div>
-            <div class="about-text">
-                <p>Chemspace Pharmaceuticals Pvt. Ltd. is a manufacturer & Supplier of API, KSM, Intermediates, Excipients etc. We believe that working in association provides opportunity for growth of multiple people. Also challenges can be resolved effortlessly & effectively. We are associated with many organizations in India & aboard to develop and manufacture critical products which are cost effective and are of consistent quality. Currently, we are manufacturing few products on loan license basis at GMP approved plants in India.</p>
-            </div>
-        </div>
+        <p>We provide world-class services in chemical synthesis and supply chain management, fostering growth and innovation.</p>
     </div>
 </section>
 
-<!-- Services Section -->
 <section id="services" class="services">
     <h2>Our Services</h2>
     <div class="service-items">
@@ -69,17 +204,11 @@
             <h3>Bulk Supply</h3>
             <p>Reliable supply of bulk chemicals for industries worldwide.</p>
         </div>
-        <div class="service">
-            <h3>Technical Support</h3>
-            <p>Expert guidance and technical assistance for your applications.</p>
-        </div>
     </div>
 </section>
 
-<!-- Contact Section -->
 <section id="contact" class="contact">
     <h2>Contact Us</h2>
-    <p>Have questions? Get in touch with us!</p>
     <form action="process_inquiry.php" method="POST">
         <input type="text" name="name" placeholder="Your Name" required>
         <input type="email" name="email" placeholder="Your Email" required>
@@ -88,34 +217,22 @@
     </form>
 </section>
 
-
 <footer>
     <p>&copy; 2025 Your Company. All rights reserved.</p>
-    <ul class="footer-links">
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Terms&Conditions</a></li>
-    </ul>
 </footer>
 
-</header>
-<!-- 
-<section class="hero">
-    <h1>Welcome to Chemspace Pharmaceuticals</h1>
-    <p>Innovating Healthcare, Improving Lives</p>
-    <button>Learn More</button>
-</section> -->
+<div class="ai-assistant" onclick="toggleAIPopup()">AI</div>
+<div class="ai-popup" id="aiPopup">
+  <header>Hi! Need help?</header>
+  <p>I'm here to assist you with inquiries.</p>
+  <button onclick="alert('Contacting support...')">Contact Support</button>
+</div>
 
-<section class="about">
-    <h2>About Us</h2>
-    <p>
-    At Chemspace Pharmaceuticals, we are dedicated to developing innovative and life-changing healthcare solutions. 
-    Our mission is to advance global health through cutting-edge research, sustainable practices, and exceptional 
-    quality in pharmaceuticals. Together, we strive to create a healthier tomorrow.
-    </p>
-</section>
-
-<footer>
-    <p>&copy; 2025 Chemspace Pharmaceuticals. All rights reserved. | <a href="#">Privacy Policy</a></p>
-</footer>
+<script>
+  function toggleAIPopup() {
+    const popup = document.getElementById('aiPopup');
+    popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
 </body>
 </html>
