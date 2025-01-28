@@ -1,45 +1,51 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "product_db";
+$host = 'localhost';
+$dbname = 'product_db';
+$username = 'root';
+$password = '';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo "Database connection failed: " . $e->getMessage();
+    exit();
 }
 
-// Process form data
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = trim($_POST['name']);
-    $email = trim($_POST['email']);
-    $message = trim($_POST['message']);
+// Check if the form was submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate inputs
+    $name = isset($_POST['name']) ? htmlspecialchars(trim($_POST['name'])) : null;
+    $email = isset($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL) : null;
+    $message = isset($_POST['message']) ? htmlspecialchars(trim($_POST['message'])) : null;
 
-    if (!empty($name) && !empty($email) && !empty($message)) {
-        // Use a prepared statement to insert data
-        $stmt = $conn->prepare("INSERT INTO inquiries (name, email, message) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $name, $email, $message);
-
-        if ($stmt->execute()) {
-            // Redirect to a thank-you page
-            header("Location: thank_you.html");
-            exit();
-        } else {
-            // Log the error and show an error message
-            file_put_contents('error_log.txt', $stmt->error . "\n", FILE_APPEND);
-            echo "Error: " . $stmt->error;
-        }
-        $stmt->close();
-    } else {
-        echo "All fields are required.";
+    if (!$name || !$email || !$message) {
+        http_response_code(400);
+        echo "Invalid input. All fields are required, and email must be valid.";
+        exit();
     }
-}
 
-$conn->close();
+    try {
+        // Insert inquiry into the database
+        $query = $pdo->prepare("
+            INSERT INTO inquiries (name, email, message, created_at)
+            VALUES (:name, :email, :message, NOW())
+        ");
+        $query->execute([
+            ':name' => $name,
+            ':email' => $email,
+            ':message' => $message
+        ]);
+
+        echo "Thank you for your inquiry, $name. We will get back to you shortly.";
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo "Failed to save your inquiry: " . $e->getMessage();
+    }
+} else {
+    http_response_code(405);
+    echo "Invalid request method.";
+}
 ?>

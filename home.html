@@ -1,238 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="description" content="Your Company - Leading manufacturer and supplier of chemicals.">
-  <meta name="keywords" content="chemicals, custom synthesis, bulk supply, research">
-  <meta name="author" content="Your Company">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Header</title>
-  <link rel="stylesheet" href="style.css"> 
-  <style>
-    @import url('https://fonts.googleapis.com/css?family=Work+Sans:400,600');
-
-    /* Purple-themed styles */
-    body {
-      font-family: 'Work Sans', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
-
-    header {
-      background-color: #6a0dad;
-      padding: 10px 20px;
-    }
-
-    .logo img {
-      height: 50px;
-    }
-
-    .menu {
-      list-style: none;
-      display: flex;
-      justify-content: space-around;
-      margin: 0;
-      padding: 0;
-    }
-
-    .menu li a {
-      text-decoration: none;
-      color: white;
-      font-weight: 600;
-      padding: 10px 15px;
-    }
-
-    .menu li a:hover {
-      background-color: #8a2be2;
-      border-radius: 5px;
-    }
-
-    .hero {
-      background-color: #dcd0ff;
-      text-align: center;
-      padding: 50px 20px;
-    }
-
-    .hero h1 {
-      color: #4b0082;
-    }
-
-    .hero p {
-      color: #6a0dad;
-      font-size: 18px;
-    }
-
-    .search-bar input, .search-bar button {
-      padding: 10px;
-      margin: 5px;
-      border: 2px solid #6a0dad;
-      border-radius: 5px;
-    }
-
-    .search-bar button {
-      background-color: #6a0dad;
-      color: white;
-      font-weight: bold;
-    }
-
-    .about-content h2, .services h2, .contact h2 {
-      text-align: center;
-      color: #6a0dad;
-    }
-
-    .services {
-      background-color: #f2e9ff;
-      padding: 20px;
-    }
-
-    .contact form button {
-      background-color: #6a0dad;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-    }
-
-    footer {
-      background-color: #4b0082;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-    }
-
-    /* AI Assistant Styling */
-    .ai-assistant {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, #8a2be2, #6a0dad);
-      box-shadow: 0 0 10px rgba(138, 43, 226, 0.7), 0 0 20px rgba(138, 43, 226, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      animation: pulse 1.5s infinite;
-      z-index: 1000;
-      font-family: 'Work Sans', sans-serif;
-      font-weight: 600;
-      color: white;
-      font-size: 18px;
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 0 10px rgba(138, 43, 226, 0.7), 0 0 20px rgba(138, 43, 226, 0.5);
-      }
-      50% {
-        box-shadow: 0 0 15px rgba(138, 43, 226, 1), 0 0 30px rgba(138, 43, 226, 0.8);
-      }
-    }
-
-    .ai-popup {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 300px;
-      padding: 15px;
-      border-radius: 10px;
-      background-color: white;
-      box-shadow: 0 5px 15px rgba(218, 10, 10, 0.2);
-      display: none;
-      z-index: 1001;
-    }
-
-    .ai-popup header {
-      font-weight: 600;
-      color: #6a0dad;
-      margin-bottom: 10px;
-    }
-
-    .ai-popup button {
-      background-color: #6a0dad;
-      color: white;
-      padding: 8px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your Company - Leading manufacturer and supplier of chemicals.">
+    <meta name="keywords" content="chemicals, custom synthesis, bulk supply, research">
+    <title>Home - Chemspace Pharmaceuticals</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-    <nav>
+    <header>
         <div class="logo">
-            <img src="logo.png" alt="Logo">
+            <img src="logo.png" alt="Company Logo">
         </div>
-        <ul class="menu">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="index.html">Products</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-</header>
+        <nav>
+            <ul class="menu">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="index.html">Products</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<section class="hero">
-    <h1>Your Company Private Limited</h1>
-    <p>A one-stop destination for all your research needs</p>
-    <div class="search-bar">
-        <input type="text" placeholder="CAS No/Catalog No/Chemical Name">
-        <button>Search</button>
-    </div>
-</section>
+    <section class="hero">
+        <h1>Welcome to Chemspace Pharmaceuticals</h1>
+        <p>Your one-stop solution for custom chemical synthesis and bulk supply.</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Search by CAS No or Product Name">
+            <button>Search</button>
+        </div>
+    </section>
 
-<section id="about" class="about">
-    <div class="about-content">
+    <section id="about" class="about">
         <h2>About Us</h2>
-        <p>We provide world-class services in chemical synthesis and supply chain management, fostering growth and innovation.</p>
-    </div>
-</section>
+        <p>We specialize in chemical synthesis, ensuring quality and innovation in every step.</p>
+    </section>
 
-<section id="services" class="services">
-    <h2>Our Services</h2>
-    <div class="service-items">
-        <div class="service">
-            <h3>Custom Synthesis</h3>
-            <p>We provide custom chemical synthesis tailored to your needs.</p>
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <div class="service-items">
+            <div class="service">
+                <h3>Custom Synthesis</h3>
+                <p>Tailored solutions to meet your chemical needs.</p>
+            </div>
+            <div class="service">
+                <h3>Bulk Supply</h3>
+                <p>Reliable and timely delivery of bulk chemicals.</p>
+            </div>
         </div>
-        <div class="service">
-            <h3>Bulk Supply</h3>
-            <p>Reliable supply of bulk chemicals for industries worldwide.</p>
-        </div>
-    </div>
-</section>
+    </section>
 
-<section id="contact" class="contact">
-    <h2>Contact Us</h2>
-    <form action="process_inquiry.php" method="POST">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" placeholder="Your Message" required></textarea>
-        <button type="submit">Send</button>
-    </form>
-</section>
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <form action="process_inquiry.php" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
 
-<footer>
-    <p>&copy; 2025 Your Company. All rights reserved.</p>
-</footer>
-
-<div class="ai-assistant" onclick="toggleAIPopup()">AI</div>
-<div class="ai-popup" id="aiPopup">
-  <header>Hi! Need help?</header>
-  <p>I'm here to assist you with inquiries.</p>
-  <button onclick="alert('Contacting support...')">Contact Support</button>
-</div>
-
-<script>
-  function toggleAIPopup() {
-    const popup = document.getElementById('aiPopup');
-    popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
-  }
-</script>
+    <footer>
+        <p>&copy; 2025 Chemspace Pharmaceuticals. All rights reserved.</p>
+        <ul class="footer-links">
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+    </footer>
 </body>
 </html>
+  

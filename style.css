@@ -37,11 +37,12 @@ header .menu li a {
     text-decoration: none;
     color: #fff;
     font-weight: bold;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.3s;
 }
 
 header .menu li a:hover {
     color: #d1c4e9;
+    transform: scale(1.1);
 }
 
 /* Hero Section */
@@ -60,16 +61,19 @@ header .menu li a:hover {
 .hero h1 {
     font-size: 3rem;
     margin-bottom: 20px;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 20px;
+    animation: fadeIn 2s ease-in-out;
 }
 
 .hero .search-bar {
     display: flex;
     justify-content: center;
+    animation: fadeIn 2.5s ease-in-out;
 }
 
 .hero .search-bar input {
@@ -77,6 +81,7 @@ header .menu li a:hover {
     border: none;
     border-radius: 5px 0 0 5px;
     width: 300px;
+    outline: none;
 }
 
 .hero .search-bar button {
@@ -86,13 +91,27 @@ header .menu li a:hover {
     color: #fff;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .hero .search-bar button:hover {
     background-color: #7b1fa2;
+    transform: scale(1.1);
 }
 
-/* About Us Section */
+/* Animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* About Section */
 .about {
     background-color: #fff;
     padding: 50px 20px;
@@ -102,6 +121,7 @@ header .menu li a:hover {
     text-align: center;
     margin-bottom: 20px;
     color: #6a1b9a;
+    animation: fadeIn 1.5s ease-in-out;
 }
 
 .about-details {
@@ -143,7 +163,13 @@ header .menu li a:hover {
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
     width: 30%;
+}
+
+.service:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Contact Section */
@@ -180,33 +206,20 @@ header .menu li a:hover {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .contact form button:hover {
     background-color: #7b1fa2;
+    transform: scale(1.1);
 }
 
+/* Footer */
 footer {
     background-color: #4a148c;
     color: #fff;
     text-align: center;
     padding: 10px;
-}
-
-@media (max-width: 768px) {
-    .about-details {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .service-items {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .service {
-        width: 80%;
-    }
 }
 
 footer .footer-links {
@@ -229,4 +242,21 @@ footer .footer-links a {
 
 footer .footer-links a:hover {
     text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-details {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .service-items {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service {
+        width: 80%;
+    }
 }
