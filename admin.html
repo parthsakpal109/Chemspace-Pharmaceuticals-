@@ -6,14 +6,76 @@
     <title>Admin Panel - Chemspace Pharmaceuticals</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Enhanced Admin Page Styles */
         .form-container {
-            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            color: white;
+        background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+        padding: 20px;
+        border-radius: 12px; 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        color: white;
+        width: 50%;
+        margin: 50px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden; 
         }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+            width: 95%; 
+        }
+
+        .form-container input,
+        .form-container textarea,
+        .form-container button {
+            display: block;
+            width: 100%; 
+            max-width: 100%; 
+            margin: 10px 0; 
+            padding: 10px;
+            border-radius: 8px; 
+            border: 1px solid #ddd;
+            box-sizing: border-box; 
+        }
+
+        .form-container input,
+        .form-container textarea {
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+
+        .form-container button {
+            background-color: #4a148c;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            border: none;
+        }
+
+        .form-container button:hover {
+            background-color: #6a1b9a;
+            transform: scale(1.05);
+        }
+
+        .form-container label {
+            display: block;
+            width: 100%;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .form-container input[type="file"] {
+            background: none;
+            padding: 5px;
+        }
+
+        .form-container button,
+        .form-container input[type="file"] {
+            width: 100%;
+            max-width: 100%;
+        }
+
         .form-container input,
         .form-container textarea,
         .form-container button {
