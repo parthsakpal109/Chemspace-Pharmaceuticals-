@@ -1,51 +1,23 @@
 <?php
-// Database connection
-$host = 'localhost';
-$dbname = 'product_db';
-$username = 'root';
-$password = '';
+require 'db_connection.php';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo "Database connection failed: " . $e->getMessage();
-    exit();
-}
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
 
-// Check if the form was submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate inputs
-    $name = isset($_POST['name']) ? htmlspecialchars(trim($_POST['name'])) : null;
-    $email = isset($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL) : null;
-    $message = isset($_POST['message']) ? htmlspecialchars(trim($_POST['message'])) : null;
+    $collection = $database->inquiries;
+    $insertResult = $collection->insertOne([
+        'name' => $name,
+        'email' => $email,
+        'message' => $message,
+        'date' => new MongoDB\BSON\UTCDateTime()
+    ]);
 
-    if (!$name || !$email || !$message) {
-        http_response_code(400);
-        echo "Invalid input. All fields are required, and email must be valid.";
-        exit();
+    if ($insertResult->getInsertedCount() > 0) {
+        echo json_encode(['success' => 'Inquiry submitted successfully']);
+    } else {
+        echo json_encode(['error' => 'Failed to submit inquiry']);
     }
-
-    try {
-        // Insert inquiry into the database
-        $query = $pdo->prepare("
-            INSERT INTO inquiries (name, email, message, created_at)
-            VALUES (:name, :email, :message, NOW())
-        ");
-        $query->execute([
-            ':name' => $name,
-            ':email' => $email,
-            ':message' => $message
-        ]);
-
-        echo "Thank you for your inquiry, $name. We will get back to you shortly.";
-    } catch (PDOException $e) {
-        http_response_code(500);
-        echo "Failed to save your inquiry: " . $e->getMessage();
-    }
-} else {
-    http_response_code(405);
-    echo "Invalid request method.";
 }
 ?>
