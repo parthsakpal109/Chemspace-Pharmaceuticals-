@@ -1,9 +1,15 @@
 # Use PHP 8.2 with Apache
 FROM php:8.2-apache
 
-# Install required PHP extensions
+# Install required system dependencies
 RUN apt-get update && apt-get install -y \
-    php8.2-cli php8.2-mbstring php8.2-xml php8.2-curl php8.2-zip php8.2-bcmath php8.2-mongodb
+    libzip-dev \
+    libonig-dev \
+    unzip \
+    && docker-php-ext-install zip mbstring bcmath pdo pdo_mysql
+
+# Install MongoDB PHP Extension
+RUN pecl install mongodb && docker-php-ext-enable mongodb
 
 # Set working directory
 WORKDIR /var/www/html
@@ -11,7 +17,8 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . /var/www/html
 
-# Install dependencies
+# Install dependencies with Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --no-dev --optimize-autoloader
 
 # Expose port 80
