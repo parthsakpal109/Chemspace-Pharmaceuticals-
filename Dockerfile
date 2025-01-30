@@ -1,19 +1,18 @@
-# Use an official PHP image with Apache
-FROM php:8.1-apache
+# Use PHP 8.2 with Apache
+FROM php:8.2-apache
 
-# Enable required PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql mysqli
-
-# Install MongoDB PHP extension
-RUN apt-get update && apt-get install -y libssl-dev \
-    && pecl install mongodb \
-    && docker-php-ext-enable mongodb
+# Install required PHP extensions
+RUN apt-get update && apt-get install -y \
+    php8.2-cli php8.2-mbstring php8.2-xml php8.2-curl php8.2-zip php8.2-bcmath php8.2-mongodb
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy project files to the container
+# Copy project files
 COPY . /var/www/html
+
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader
 
 # Expose port 80
 EXPOSE 80
