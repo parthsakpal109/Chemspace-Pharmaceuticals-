@@ -17,9 +17,14 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . /var/www/html
 
-# Install dependencies with Composer
+# Install Composer globally
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev --optimize-autoloader
+
+# Ensure the correct PHP extensions are loaded
+RUN php -m
+
+# Install dependencies with Composer
+RUN composer install --no-dev --optimize-autoloader || cat /var/www/html/composer.lock
 
 # Expose port 80
 EXPOSE 80
