@@ -6,248 +6,197 @@
     <title>Admin Panel - Chemspace Pharmaceuticals</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Enhanced Admin Page Styles */
-        .form-container {
-            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            color: white;
-        }
-        .form-container input,
-        .form-container textarea,
-        .form-container button {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        .form-container input,
-        .form-container textarea {
-            background: rgba(255, 255, 255, 0.8);
-            color: #333;
-        }
-        .form-container button {
-            background-color: #4a148c;
-            color: #fff;
-            cursor: pointer;
-            transition: transform 0.3s, background-color 0.3s;
-        }
-        .form-container button:hover {
-            background-color: #6a1b9a;
-            transform: scale(1.05);
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
 
-        .product-card {
+        .form-container, .manage-container {
             background: #fff;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            margin: 15px 0;
-            transition: transform 0.3s, box-shadow 0.3s;
+            width: 50%;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-        .product-card h2 {
-            margin: 0;
-            font-size: 1.8rem;
+
+        h2 {
             color: #6a1b9a;
-        }
-        .product-card p {
-            margin: 10px 0;
-            color: #555;
-        }
-        .product-card button {
-            background-color: #8e24aa;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .product-card button:hover {
-            background-color: #6a1b9a;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
         }
-        .modal.active {
-            display: block;
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
         }
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+
+        .form-group input,
+        .form-group textarea {
             width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
         }
-        .modal-overlay.active {
+
+        .form-group textarea {
+            resize: none;
+            height: 90px;
+        }
+
+        .form-group input[type="file"] {
+            background: none;
+            padding: 6px;
+        }
+
+        .submit-btn {
+            background-color: #4a148c;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #6a1b9a;
+            transform: scale(1.03);
+        }
+
+        /* Manage Products Section */
+        .manage-container {
+            text-align: left; /* Left-align the content */
+        }
+
+        #product-list {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #no-products {
+            color: #888;
+            font-size: 16px;
+            font-weight: bold;
             display: block;
+        }
+
+        /* Navbar - Fixed alignment to the left */
+        nav {
+        background: #6a1b9a;
+        padding: 15px;
+        text-align: right; /* Aligning menu items to the right */
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: flex-end; /* Push navbar items to the right */
+        gap: 20px;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav ul li {
+        display: inline;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 15px;
+            background: #4a148c;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="menu">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="index.html">Products</a></li>
-                <li><a href="admin.html" class="active">Admin</a></li>
-            </ul>
-        </nav>
-    </header>
+
+    <nav>
+        <ul class="menu">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Products</a></li>
+            <li><a href="admin.html" class="active">Admin</a></li>
+        </ul>
+    </nav>
 
     <main>
-        <h1>Admin Panel</h1>
-
         <section id="add-product" class="form-container">
             <h2>Add New Product</h2>
             <form action="add_product.php" method="POST" enctype="multipart/form-data">
-                <input type="text" name="name" placeholder="Product Name" required>
-                <input type="text" name="CAS_number" placeholder="CAS Number" required>
-                <textarea name="description" placeholder="Description" required></textarea>
-                <input type="text" name="quantity" placeholder="Quantity Range" required>
-                <input type="file" name="image" accept="image/*" required>
-                <button type="submit">Add Product</button>
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" name="name" placeholder="Enter product name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>CAS Number</label>
+                    <input type="text" name="CAS_number" placeholder="Enter CAS Number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" placeholder="Enter product description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity Range</label>
+                    <input type="text" name="quantity" placeholder="Enter quantity range" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <input type="file" name="image" accept="image/*" required title="Upload product image">
+                </div>
+
+                <button type="submit" class="submit-btn">Add Product</button>
             </form>
         </section>
 
-        <section id="manage-products">
+        <section id="manage-products" class="manage-container">
             <h2>Manage Products</h2>
-            <div id="product-list"></div>
+            <div id="product-list">
+                <p id="no-products">No products found.</p>
+            </div>
         </section>
     </main>
-
-    <div class="modal" id="edit-modal">
-        <h2>Edit Product</h2>
-        <form id="edit-form">
-            <input type="hidden" id="edit-id">
-            <input type="text" id="edit-name" placeholder="Product Name" required>
-            <input type="text" id="edit-CAS_number" placeholder="CAS Number" required>
-            <textarea id="edit-description" placeholder="Description" required></textarea>
-            <input type="text" id="edit-quantity" placeholder="Quantity Range" required>
-            <button type="submit">Save Changes</button>
-        </form>
-    </div>
-    <div class="modal-overlay" id="modal-overlay"></div>
 
     <footer>
         <p>&copy; 2025 Chemspace Pharmaceuticals. All rights reserved.</p>
     </footer>
 
-    <script>
-        async function fetchProducts() {
-            try {
-                const response = await fetch('fetch_products.php');
-                const products = await response.json();
-                const productList = document.getElementById('product-list');
-
-                productList.innerHTML = '';
-                products.forEach(product => {
-                    const productDiv = document.createElement('div');
-                    productDiv.classList.add('product-card');
-                    productDiv.innerHTML = `
-                        <h2>${product.name}</h2>
-                        <p>CAS Number: ${product.CAS_number}</p>
-                        <p>Description: ${product.description}</p>
-                        <p>Quantity: ${product.quantity}</p>
-                        <button onclick="openEditModal(${product.id}, '${product.name}', '${product.CAS_number}', '${product.description}', '${product.quantity}')">Edit</button>
-                        <button onclick="deleteProduct(${product.id})">Delete</button>
-                    `;
-                    productList.appendChild(productDiv);
-                });
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
-        }
-
-        function openEditModal(id, name, CAS, description, quantity) {
-            document.getElementById('edit-id').value = id;
-            document.getElementById('edit-name').value = name;
-            document.getElementById('edit-CAS_number').value = CAS;
-            document.getElementById('edit-description').value = description;
-            document.getElementById('edit-quantity').value = quantity;
-
-            document.getElementById('edit-modal').classList.add('active');
-            document.getElementById('modal-overlay').classList.add('active');
-        }
-
-        function closeEditModal() {
-            document.getElementById('edit-modal').classList.remove('active');
-            document.getElementById('modal-overlay').classList.remove('active');
-        }
-
-        document.getElementById('edit-form').addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const id = document.getElementById('edit-id').value;
-            const name = document.getElementById('edit-name').value;
-            const CAS = document.getElementById('edit-CAS_number').value;
-            const description = document.getElementById('edit-description').value;
-            const quantity = document.getElementById('edit-quantity').value;
-
-            try {
-                const response = await fetch('edit_product.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id, name, CAS, description, quantity })
-                });
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert('Product updated successfully!');
-                    closeEditModal();
-                    fetchProducts();
-                } else {
-                    alert(result.error || 'Failed to update product.');
-                }
-            } catch (error) {
-                console.error('Error updating product:', error);
-            }
-        });
-
-        async function deleteProduct(productId) {
-            if (!confirm('Are you sure you want to delete this product?')) {
-                return;
-            }
-
-            try {
-                const response = await fetch(`delete_product.php?id=${productId}`, { method: 'GET' });
-                const result = await response.json();
-
-                if (response.ok) {
-                    alert(result.success);
-                    fetchProducts();
-                } else {
-                    alert(result.error || 'Failed to delete the product.');
-                }
-            } catch (error) {
-                console.error('Error deleting product:', error);
-                alert('An error occurred while trying to delete the product.');
-            }
-        }
-
-        document.getElementById('modal-overlay').addEventListener('click', closeEditModal);
-
-        fetchProducts();
-    </script>
 </body>
 </html>
