@@ -6,170 +6,190 @@
     <title>Admin Panel - Chemspace Pharmaceuticals</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Center Admin Panel Heading */
-        h1 {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #4a148c;
-            margin-top: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
 
-        /* Form Container */
-        .form-container {
-            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            color: white;
-            width: 50%;
-            margin: 50px auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .form-container form {
-            display: flex;
-            flex-direction: column;
-            width: 95%;
-        }
-
-        .form-container input,
-        .form-container textarea,
-        .form-container button {
-            display: block;
-            width: 100%;
-            max-width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-        }
-
-        .form-container input,
-        .form-container textarea {
-            background: rgba(255, 255, 255, 0.8);
-            color: #333;
-        }
-
-        .form-container button {
-            background-color: #4a148c;
-            color: #fff;
-            cursor: pointer;
-            transition: transform 0.3s, background-color 0.3s;
-            border: none;
-        }
-
-        .form-container button:hover {
-            background-color: #6a1b9a;
-            transform: scale(1.05);
-        }
-
-        .form-container label {
-            display: block;
-            width: 100%;
-            text-align: left;
-            font-weight: bold;
-        }
-
-        .form-container input[type="file"] {
-            background: none;
-            padding: 5px;
-        }
-
-        /* Product Card Styling */
-        .product-card {
+        .form-container, .manage-container {
             background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            margin: 15px 0;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .product-card h2 {
-            margin: 0;
-            font-size: 1.8rem;
-            color: #6a1b9a;
-        }
-
-        .product-card p {
-            margin: 10px 0;
-            color: #555;
-        }
-
-        .product-card button {
-            background-color: #8e24aa;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .product-card button:hover {
-            background-color: #6a1b9a;
-        }
-
-        /* Manage Products Styling */
-        #manage-products {
-            background: linear-gradient(135deg, #8e24aa, #6a1b9a);
-            padding: 20px;
+            padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            color: white;
             width: 50%;
             margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        h2 {
+            color: #6a1b9a;
+            font-size: 24px;
+            font-weight: bold;
             text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        .form-group textarea {
+            resize: none;
+            height: 90px;
+        }
+
+        .form-group input[type="file"] {
+            background: none;
+            padding: 6px;
+        }
+
+        .submit-btn {
+            background-color: #4a148c;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #6a1b9a;
+            transform: scale(1.03);
+        }
+
+        /* Manage Products Section */
+        .manage-container {
+            text-align: left; /* Left-align the content */
         }
 
         #product-list {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            min-height: 50px;
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #no-products {
+            color: #888;
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* Navbar - Fixed alignment to the left */
+        nav {
+        background: #6a1b9a;
+        padding: 15px;
+        text-align: right; /* Aligning menu items to the right */
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: flex-end; /* Push navbar items to the right */
+        gap: 20px;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav ul li {
+        display: inline;
+    }
+
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 15px;
+            background: #4a148c;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="menu">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="index.html">Products</a></li>
-                <li><a href="admin.html" class="active">Admin</a></li>
-            </ul>
-        </nav>
-    </header>
+
+    <nav>
+        <ul class="menu">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="index.html">Products</a></li>
+            <li><a href="admin.html" class="active">Admin</a></li>
+        </ul>
+    </nav>
 
     <main>
-        <h1>Admin Panel</h1>
-
         <section id="add-product" class="form-container">
             <h2>Add New Product</h2>
             <form action="add_product.php" method="POST" enctype="multipart/form-data">
-                <input type="text" name="name" placeholder="Product Name" required>
-                <input type="text" name="CAS_number" placeholder="CAS Number" required>
-                <textarea name="description" placeholder="Description" required></textarea>
-                <input type="text" name="quantity" placeholder="Quantity Range" required>
-                <label for="image">Product Image</label>
-                <input type="file" id="image" name="image" accept="image/*" required>
-                <button type="submit">Add Product</button>
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" name="name" placeholder="Enter product name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>CAS Number</label>
+                    <input type="text" name="CAS_number" placeholder="Enter CAS Number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" placeholder="Enter product description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity Range</label>
+                    <input type="text" name="quantity" placeholder="Enter quantity range" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <input type="file" name="image" accept="image/*" required title="Upload product image">
+                </div>
+
+                <button type="submit" class="submit-btn">Add Product</button>
             </form>
         </section>
 
-        <section id="manage-products">
+        <section id="manage-products" class="manage-container">
             <h2>Manage Products</h2>
             <div id="product-list">
-                <p id="no-products" style="display: none; color: #fff;">No products found.</p>
+                <p id="no-products">No products found.</p>
             </div>
         </section>
     </main>
@@ -178,42 +198,5 @@
         <p>&copy; 2025 Chemspace Pharmaceuticals. All rights reserved.</p>
     </footer>
 
-    <script>
-        async function fetchProducts() {
-            try {
-                const response = await fetch('fetch_products.php');
-                const products = await response.json();
-                const productList = document.getElementById('product-list');
-                const noProductsMsg = document.getElementById('no-products');
-
-                productList.innerHTML = '';
-
-                if (products.length === 0) {
-                    noProductsMsg.style.display = 'block';
-                } else {
-                    noProductsMsg.style.display = 'none';
-                    products.forEach(product => {
-                        const productDiv = document.createElement('div');
-                        productDiv.classList.add('product-card');
-                        productDiv.innerHTML = `
-                            <h2>${product.name}</h2>
-                            <p>CAS Number: ${product.CAS_number}</p>
-                            <p>Description: ${product.description}</p>
-                            <p>Quantity: ${product.quantity}</p>
-                            <button onclick="editProduct(${product.id})">Edit</button>
-                            <button onclick="deleteProduct(${product.id})">Delete</button>
-                        `;
-                        productList.appendChild(productDiv);
-                    });
-                }
-            } catch (error) {
-                console.error('Error fetching products:', error);
-                document.getElementById('no-products').textContent = "Failed to load products.";
-                document.getElementById('no-products').style.display = 'block';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', fetchProducts);
-    </script>
 </body>
 </html>
