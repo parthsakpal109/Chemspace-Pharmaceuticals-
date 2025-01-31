@@ -1,8 +1,8 @@
 <?php
-$host = "localhost"; // Now using local MySQL on EC2
-$user = "chemspace_user"; // User created in MySQL
-$pass = "your_secure_password"; // Set during MySQL setup
-$dbname = "chemspace_db"; // Your database name
+$host = "localhost";
+$user = getenv('DB_USER');  // Use environment variables
+$pass = getenv('DB_PASS');  // Use environment variables
+$dbname = "chemspace_db";
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
