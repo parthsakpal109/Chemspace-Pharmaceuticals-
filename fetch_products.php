@@ -1,25 +1,16 @@
 <?php
 require 'db_connection.php';
 
-$collection = $database->products; // Collection Name
+$sql = "SELECT * FROM products";
+$result = $conn->query($sql);
 
-$searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
+$products = [];
 
-$filter = [];
-if ($searchQuery) {
-    $filter = ['$or' => [
-        ['name' => new MongoDB\BSON\Regex($searchQuery, 'i')],
-        ['CAS_number' => new MongoDB\BSON\Regex($searchQuery, 'i')]
-    ]];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
 }
 
-$products = $collection->find($filter)->toArray();
-
-// Convert MongoDB ObjectId to string
-foreach ($products as &$product) {
-    $product['_id'] = (string) $product['_id'];
-}
-
-header('Content-Type: application/json');
 echo json_encode($products);
 ?>

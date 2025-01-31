@@ -1,13 +1,12 @@
 <?php
-require 'vendor/autoload.php'; // Include Composer's autoloader
+$host = "localhost"; // Now using local MySQL on EC2
+$user = "chemspace_user"; // User created in MySQL
+$pass = "your_secure_password"; // Set during MySQL setup
+$dbname = "chemspace_db"; // Your database name
 
-$uri = "mongodb+srv://jarejaydeep:Bcj3H3XKI0pGoImc@cluster0.fxrir.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+$conn = new mysqli($host, $user, $pass, $dbname);
 
-try {
-    $client = new MongoDB\Client($uri);
-    $database = $client->selectDatabase('chemspace_db'); // Replace with your database name
-    echo "Connected to MongoDB successfully";
-} catch (Exception $e) {
-    die("Error: " . $e->getMessage());
+if ($conn->connect_error) {
+    die("Database connection failed: " . $conn->connect_error);
 }
 ?>
