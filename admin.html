@@ -4,199 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - Chemspace Pharmaceuticals</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Poppins', sans-serif;
         }
-
-        .form-container, .manage-container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            width: 50%;
-            margin: 50px auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        h2 {
-            color: #6a1b9a;
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            color: #333;
-            font-size: 16px;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-        }
-
-        .form-group textarea {
-            resize: none;
-            height: 90px;
-        }
-
-        .form-group input[type="file"] {
-            background: none;
-            padding: 6px;
-        }
-
-        .submit-btn {
-            background-color: #4a148c;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            width: 100%;
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .submit-btn:hover {
-            background-color: #6a1b9a;
-            transform: scale(1.03);
-        }
-
-        /* Manage Products Section */
-        .manage-container {
-            text-align: left; /* Left-align the content */
-        }
-
-        #product-list {
-            margin-top: 15px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #no-products {
-            color: #888;
-            font-size: 16px;
-            font-weight: bold;
-            display: block;
-        }
-
-        /* Navbar - Fixed alignment to the left */
-        nav {
-        background: #6a1b9a;
-        padding: 15px;
-        text-align: right; /* Aligning menu items to the right */
-    }
-
-    nav ul {
-        list-style: none;
-        display: flex;
-        justify-content: flex-end; /* Push navbar items to the right */
-        gap: 20px;
-        padding: 0;
-        margin: 0;
-    }
-
-    nav ul li {
-        display: inline;
-    }
-
-    nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            padding: 15px;
-            background: #4a148c;
-            color: white;
+        .gradient-bg {
+            background: linear-gradient(135deg, #2b6777 0%, #52ab98 100%);
         }
     </style>
 </head>
-<body>
-
-    <nav>
-        <ul class="menu">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="index.html">Products</a></li>
-            <li><a href="admin.html" class="active">Admin</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <section id="add-product" class="form-container">
-            <h2>Add New Product</h2>
-            <form action="add_product.php" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label>Product Name</label>
-                    <input type="text" name="name" placeholder="Enter product name" required>
-                </div>
-
-                <div class="form-group">
-                    <label>CAS Number</label>
-                    <input type="text" name="CAS_number" placeholder="Enter CAS Number" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea name="description" placeholder="Enter product description" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Quantity Range</label>
-                    <input type="text" name="quantity" placeholder="Enter quantity range" required>
-                </div>
-
-                <div class="form-group">
-                    <label>Product Image</label>
-                    <input type="file" name="image" accept="image/*" required title="Upload product image">
-                </div>
-
-                <button type="submit" class="submit-btn">Add Product</button>
-            </form>
-        </section>
-
-        <section id="manage-products" class="manage-container">
-            <h2>Manage Products</h2>
-            <div id="product-list">
-                <p id="no-products">No products found.</p>
+<body class="bg-gray-50">
+    <!-- Admin Header -->
+    <header class="gradient-bg text-white py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="logo1.png" alt="Chemspace Logo" class="h-12">
+                <span class="ml-4 text-xl font-bold">Admin Dashboard</span>
             </div>
-        </section>
-    </main>
+            <nav>
+                <a href="/" class="text-white hover:text-gray-200 transition-colors ml-4">
+                    <i class="bi bi-house-door mr-1"></i>Back to Website
+                </a>
+            </nav>
+        </div>
+    </header>
 
-    <footer>
-        <p>&copy; 2025 Chemspace Pharmaceuticals. All rights reserved.</p>
-    </footer>
+    <div class="container mx-auto px-4 mt-8">
+        <div class="grid md:grid-cols-4 gap-6">
+            <!-- Sidebar -->
+            <div class="md:col-span-1">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <nav class="space-y-4">
+                        <a href="#dashboard" class="block py-2 px-4 rounded-lg hover:bg-[#52ab98] hover:text-white transition-colors">
+                            <i class="bi bi-speedometer2 mr-2"></i>Dashboard
+                        </a>
+                        <a href="#products" class="block py-2 px-4 rounded-lg hover:bg-[#52ab98] hover:text-white transition-colors">
+                            <i class="bi bi-box mr-2"></i>Products
+                        </a>
+                        <hr class="my-4">
+                        <button onclick="logout()" class="w-full text-left py-2 px-4 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
+                            <i class="bi bi-box-arrow-right mr-2"></i>Logout
+                        </button>
+                    </nav>
+                </div>
+            </div>
 
+            <!-- Main Content -->
+            <div class="md:col-span-3 space-y-6">
+                <!-- Add Product Form -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-xl font-bold mb-6 text-[#2b6777]">Add New Product</h2>
+                    <form id="addProductForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <labelclass="block text-gray-700 mb-2">Product Name</label>
+                                <inputtype="text" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
+                            </div>
+                            <div>
+                                <labelclass="block text-gray-700 mb-2">CAS Number</label>
+                                <inputtype="text" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Description</label>
+                            <textarea rows="4" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Product Image</label>
+                            <input type="file" accept="image/*" class="w-full" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Price</label>
+                            <input type="number" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
+                        </div>
+                        <button type="submit" class="px-6 py-3 bg-[#2b6777] text-white rounded-lg hover:bg-[#52ab98] transition-colors">
+                            Add Product
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '/';
+            }
+        }
+
+        // Form submission
+        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Product added successfully!');
+            this.reset();
+        });
+    </script>
 </body>
 </html>

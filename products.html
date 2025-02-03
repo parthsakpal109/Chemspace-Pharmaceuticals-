@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Chemspace Pharmaceuticals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #2b6777 0%, #52ab98 100%);
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header (Same as home page) -->
+    <header class="fixed w-full top-0 z-50 bg-white shadow-md">
+        <!-- Header content same as home page -->
+    </header>
+
+    <!-- Products Hero Section -->
+    <section class="gradient-bg pt-32 pb-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Our Products</h1>
+                <p class="text-xl text-gray-100 mb-8">Discover our wide range of pharmaceutical products</p>
+                
+                <!-- Product Search and Filter -->
+                <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-4 items-center justify-center">
+                    <input type="text" id="searchInput" placeholder="Search products..." 
+                           class="flex-1 px-6 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#52ab98]">
+                    <select id="categoryFilter" class="px-6 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#52ab98]">
+                        <option value="">All Categories</option>
+                        <option value="antibiotics">Antibiotics</option>
+                        <option value="analgesics">Analgesics</option>
+                        <option value="antiviral">Antiviral</option>
+                    </select>
+                    <button onclick="filterProducts()" class="px-8 py-3 bg-[#52ab98] text-white rounded-lg hover:bg-[#2b6777] transition-colors">
+                        Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="productsGrid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loading" class="text-center hidden">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2b6777]"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Same as home page) -->
+    <footer class="bg-gray-900 text-white py-12">
+        <!-- Footer content same as home page -->
+    </footer>
+
+    <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: "Amoxicillin",
+                category: "antibiotics",
+                description: "Broad-spectrum antibiotic",
+                cas: "26787-78-0",
+                price: "$299.99",
+                image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGhhcm1hY2V1dGljYWx8fHx8fHwxNzAwNzQ4MTI5&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1080"
+            },
+            // Add more products here
+        ];
+
+        function createProductCard(product) {
+            return `
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden product-card">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">${product.name}</h3>
+                        <p class="text-gray-600 mb-2">CAS: ${product.cas}</p>
+                        <p class="text-gray-600 mb-4">${product.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-[#2b6777] font-bold">${product.price}</span>
+                            <button onclick="inquireProduct(${product.id})" 
+                                    class="px-4 py-2 bg-[#52ab98] text-white rounded hover:bg-[#2b6777] transition-colors">
+                                Inquire Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadProducts() {
+            const grid = document.getElementById('productsGrid');
+            const loading = document.getElementById('loading');
+            
+            loading.classList.remove('hidden');
+            grid.innerHTML = '';
+
+            // Simulate API call
+            setTimeout(() => {
+                products.forEach(product => {
+                    grid.innerHTML += createProductCard(product);
+                });
+                loading.classList.add('hidden');
+            }, 1000);
+        }
+
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            
+            const filteredProducts = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                                   product.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = category === '' || product.category === category;
+                return matchesSearch && matchesCategory;
+            });
+
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            filteredProducts.forEach(product => {
+                grid.innerHTML += createProductCard(product);
+            });
+        }
+
+        function inquireProduct(productId) {
+            // Add your inquiry logic here
+            alert(`Inquiry sent for product ID: ${productId}`);
+        }
+
+        // Initialize products on page load
+        document.addEventListener('DOMContentLoaded', loadProducts);
+
+        // Mobile menu toggle (same as home page)
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if(menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+</body>
+</html>
