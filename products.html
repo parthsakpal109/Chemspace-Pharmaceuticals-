@@ -23,7 +23,7 @@
     <script>
         async function fetchProducts(query = '') {
             try {
-                const response = await fetch('http://localhost/MyWebsite/Chemspace-Pharmaceuticals-/Chemspace-Pharmaceuticals-/fetch_products.php');
+                const response = await fetch('http://localhost/MyWebsite/Chemspace-Pharmaceuticals-/fetch_products.php');
                 const products = await response.json();
                 const productList = document.getElementById('productsGrid');
                 productList.innerHTML = '';
