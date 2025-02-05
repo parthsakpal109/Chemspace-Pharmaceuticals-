@@ -19,6 +19,52 @@
             transition: all 0.3s ease;
         }
     </style>
+
+    <script>
+        async function fetchProducts(query = '') {
+            try {
+                const response = await fetch('http://localhost/MyWebsite/Chemspace-Pharmaceuticals-/Chemspace-Pharmaceuticals-/fetch_products.php');
+                const products = await response.json();
+                const productList = document.getElementById('productsGrid');
+                productList.innerHTML = '';
+        
+                if (!Array.isArray(products)) {
+                    console.error('Error: Unexpected response format', products);
+                    productList.innerHTML = '<p class="text-center text-red-600">Error loading products.</p>';
+                    return;
+                }
+        
+                if (products.length === 0) {
+                    productList.innerHTML = '<p class="text-center text-gray-600">No products found.</p>';
+                    return;
+                }
+        
+                products.forEach(product => {
+                    let imageUrl = product.image ? `uploads/${product.image}` : 'uploads/default.png';
+        
+                    const productDiv = document.createElement('div');
+                    productDiv.classList.add('bg-white', 'rounded-lg', 'shadow-lg', 'p-4', 'product-card');
+                    productDiv.innerHTML = `
+                        <img src="${imageUrl}" alt="${product.name}" class="w-full object-cover rounded">
+                        <h3 class="text-lg font-semibold text-gray-800 mt-4">${product.name}</h3>
+                        <p class="text-gray-600"><strong>CAS:</strong> ${product.cas_number}</p>
+                        <p class="text-gray-600"><strong>Formula:</strong> ${product.formula}</p>
+                        <p class="text-gray-600">${product.description}</p>
+                    `;
+                    productList.appendChild(productDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('search').value;
+            fetchProducts(query);
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchProducts);
+    </script>
 </head>
 <body class="bg-gray-50">
     <!-- Navbar -->
@@ -43,70 +89,25 @@
             <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Our Products</h1>
             <p class="text-xl text-gray-100 mb-8">Discover our wide range of pharmaceutical products</p>
         </div>
-    </section>
-
-    <section class="py-20">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="productsGrid"></div>
-            <div id="loading" class="text-center hidden">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#2b6777]"></div>
+        <main class=" container mx-auto px-4 py-10">
+            <h1 class="text-3xl font-bold text-center mb-6"></h1>
+            <div class="max-w-2xl mx-auto mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" id="search" placeholder="Search by CAS No or Product Name" 
+                    class="flex-1 px-6 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#52ab98]">
+                    <button onclick="searchProducts()" class="px-8 py-3 bg-[#52ab98] text-white rounded-lg hover:bg-[#2b6777] transition-colors btn-hover">
+                        <i class="bi bi-search mr-2"></i>Search
+                    </button>
+                </div>
             </div>
-        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="productsGrid"></div>
+        </main>
     </section>
-
-    <script>
-        const products = [
-            { id: 1, name: "ALOGLIPTIN", category: "Antidiabetic", description: "Used to control blood sugar levels in type 2 diabetes.", cas: "334618-23-4", Range: "135.75g to ..", image: "photo1.jpg" },
-            { id: 2, name: "BRIVARACETAM", category: "Antiepileptic", description: "Used to treat seizures in epilepsy", cas: "63095-51-2", Range: "100g - ∞", image: "photo2.jpg" },
-            { id: 3, name: "CAPIVASERTIB", category: "Anticancer", description: "Investigational drug targeting cancer cell growth pathways", cas: "6282-88-8", Range: "100g - ∞", image: "photo3.jpg" },
-            { id: 4, name: "CASPOFUNGIN", category: "Antifungal", description: "Treats fungal infections, especially Candida", cas: "135575-42-7", Range: "100g - ∞", image: "photo4.jpg" },
-            { id: 5, name: "DAPA & EMPA", category: "Antidiabetic", description: "Medications for controlling blood sugar in type 2 diabetes and heart failure", cas: "21739-92-4", Range: "100g - ∞", image: "photo5.jpg" },
-            { id: 6, name: "Adenine", category: "antibiotics", description: "Used for bacterial infections", cas: "83905-01-4", Range: "100g - ∞", image: "photo6.jpg" }
-        ];
-
-        function createProductCard(product) {
-            return `
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden product-card">
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">${product.name}</h3>
-                        <p class="text-gray-600 mb-2">CAS: ${product.cas}</p>
-                        <p class="text-gray-600 mb-4">${product.description}</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-[#2b6777] font-bold">${product.price}</span>
-                            <button onclick="inquireProduct(${product.id})" class="px-4 py-2 bg-[#1e4b7b] text-white rounded hover:bg-[#52ab98] transition-colors">
-                            Inquire Now
-                        </button>
-                        </div>
-                    </div>
-                </div>`;
-        }
-
-        function loadProducts() {
-            const grid = document.getElementById('productsGrid');
-            const loading = document.getElementById('loading');
-            
-            loading.classList.remove('hidden');
-            grid.innerHTML = '';
-
-            setTimeout(() => {
-                products.forEach(product => {
-                    grid.innerHTML += createProductCard(product);
-                });
-                loading.classList.add('hidden');
-            }, 1000);
-        }
-
-        function inquireProduct(productId) {
-            alert(`Inquiry sent for product ID: ${productId}`);
-        }
-
-        document.addEventListener('DOMContentLoaded', loadProducts);
-    </script>
 </body>
 </html>
- <!-- Footer -->
- <footer class="gradient-bg text-white py-8">
+
+<!-- Footer -->
+<footer class="gradient-bg text-white py-8">
     <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-3 gap-8">
             <div>
