@@ -57,28 +57,28 @@
                 <!-- Add Product Form -->
                 <div class="bg-white rounded-lg shadow p-6">
                     <h2 class="text-xl font-bold mb-6 text-[#1e4b7b]">Add New Product</h2>
-                    <form id="addProductForm" action="add_product.php" method="post" enctype="multipart/form-data" ss="space-y-6">
+                    <form id="addProductForm" action="add_product.php" method="POST" enctype="multipart/form-data" ss="space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-gray-700 mb-2">Product Name</label>
-                                <input type="text" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
+                                <input type="text" name="name" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
                             </div>
                             <div>
                                 <label class="block text-gray-700 mb-2">CAS Number</label>
-                                <input type="text" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
+                                <input type="text" name="cas_number" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
                             </div>
                         </div>
                         <div>
                             <label class="block text-gray-700 mb-2">Description</label>
-                            <textarea rows="4" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" ></textarea>
+                            <textarea rows="4" name="description" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" ></textarea>
                         </div>
                         <div>
                             <label class="block text-gray-700 mb-2">Product Image</label>
-                            <input type="file" accept="image/*" class="w-full mb-4" >
+                            <input type="file" name="image" accept="image/*" class="w-full mb-4" >
                         </div>
                         <div>
                             <label class="block text-gray-700 mb-2">Range</label>
-                            <input type="text" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98] mb-4" required>
+                            <input type="text" name="range" class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98] mb-4" required>
                         </div>
                         <button type="submit" class="px-6 py-3 bg-[#2b6777] text-white rounded-lg hover:bg-[#52ab98] transition-colors">
                             Add Product
@@ -99,9 +99,9 @@
 
         // Form submission
         document.getElementById("addProductForm").addEventListener("submit", async function(e) {
-            e.preventDefault(); // Prevent page reload
+            e.preventDefault(); // Prevent form from reloading
         
-            let formData = new FormData(this); // Get form data
+            let formData = new FormData(this); // Collect form data
         
             try {
                 let response = await fetch("add_product.php", {

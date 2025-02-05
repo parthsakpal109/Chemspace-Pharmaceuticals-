@@ -1,2 +1,37 @@
 [05-Feb-2025 12:03:04 Europe/Berlin] Missing required fields.
 [05-Feb-2025 12:03:28 Europe/Berlin] Missing required fields.
+[05-Feb-2025 12:05:40 Europe/Berlin] Missing required fields.
+[05-Feb-2025 12:05:54 Europe/Berlin] Missing required fields.
+[05-Feb-2025 12:10:37 Europe/Berlin] Missing required fields.
+[05-Feb-2025 12:11:12 Europe/Berlin] Missing required fields.
+[05-Feb-2025 12:18:15 Europe/Berlin] Array
+(
+)
+
+[05-Feb-2025 12:18:15 Europe/Berlin] Array
+(
+)
+
+[05-Feb-2025 12:19:43 Europe/Berlin] Array
+(
+)
+
+[05-Feb-2025 12:19:43 Europe/Berlin] Array
+(
+)
+
+[05-Feb-2025 12:33:23 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'image' in 'field list' in C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php:42
+Stack trace:
+#0 C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php(42): mysqli->prepare('INSERT INTO pro...')
+#1 {main}
+  thrown in C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php on line 42
+[05-Feb-2025 12:33:33 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'image' in 'field list' in C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php:42
+Stack trace:
+#0 C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php(42): mysqli->prepare('INSERT INTO pro...')
+#1 {main}
+  thrown in C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php on line 42
+[05-Feb-2025 12:38:10 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'range_value' in 'field list' in C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php:42
+Stack trace:
+#0 C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php(42): mysqli->prepare('INSERT INTO pro...')
+#1 {main}
+  thrown in C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php on line 42
