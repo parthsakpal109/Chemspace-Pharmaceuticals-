@@ -12,98 +12,98 @@
             font-family: 'Poppins', sans-serif;
         }
         .gradient-bg {
-            background: linear-gradient(135deg, #1e4b7b, #1e4b7b);
+            background: linear-gradient(135deg, #ffff, #1e4b7b);
+        }
+        /* Slideshow Styles */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+        .slideshow-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slideshow-container img.active {
+            opacity: 1;
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Login Section -->
-    <div id="loginSection" class="min-h-screen flex items-center justify-center gradient-bg p-4">
-        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-            <div class="text-center mb-8">
-                <img src="chem.png" alt="Chemspace Logo" class="h-12 mx-auto mb-4">
-                <h2 class="text-2xl font-bold text-gray-800">Admin Login</h2>
-            </div>
-            <form id="loginForm" class="space-y-6">
-                <div>
-                    <label class="block text-gray-700 mb-2">Username</label>
-                    <input type="text" id="username" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
+    <div class="min-h-screen flex relative">
+        <!-- Top-Left Logo -->
+        <div class="absolute top-4 left-4">
+            <img src="chem copy.png" alt="Company Logo" class="h-12">
+        </div>
+
+        <!-- Left Section: Form -->
+        <div class="w-full md:w-1/2 flex items-center justify-center gradient-bg p-4">
+            <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+                <div class="text-center mb-8">
+                    <img src="chem.png" alt="Chemspace Logo" class="h-12 mx-auto mb-4">
+                    <h2 class="text-3xl font-extrabold text-gray-800">Admin Login</h2> <!-- Increased font size -->
                 </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Password</label>
-                    <input type="password" id="password" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Username</label>
+                        <input type="text" id="username" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Password</label>
+                        <input type="password" id="password" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
+                    </div>
+                    <button type="submit" class="w-full px-8 py-3 bg-[#1e4b7b] text-white rounded-lg hover:bg-[#123456] transition-colors">Login</button>
+
+                    <!-- OR Line -->
+                    <div class="flex items-center my-4">
+                        <hr class="flex-grow border-gray-300">
+                        <span class="px-3 text-gray-500 font-medium">OR</span>
+                        <hr class="flex-grow border-gray-300">
+                    </div>
+
+                    <!-- Google Sign-In Button -->
+                    <button class="w-full px-8 py-3 bg-blue-500 text-white rounded-lg flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors">
+                        <i class="bi bi-google"></i> Sign in with Google
+                    </button>
+                </form>
+                
+                <div class="text-center mt-4">
+                    <a href="#" onclick="showForgotPassword()" class="text-blue-600 hover:underline">Forgot Password?</a>
+                    <span class="mx-2">|</span>
+                    <a href="#" onclick="showRegister()" class="text-blue-600 hover:underline">New Register</a>
                 </div>
-                <button type="submit" class="w-full px-8 py-3 bg-[#1e4b7b] text-white rounded-lg hover:bg-[#1e4b7b] transition-colors">Login</button>
-            </form>
-            <div class="text-center mt-4">
-                <a href="#" onclick="showForgotPassword()" class="text-blue-600 hover:underline">Forgot Password?</a>
-                <span class="mx-2">|</span>
-                <a href="#" onclick="showRegister()" class="text-blue-600 hover:underline">New Register</a>
             </div>
         </div>
-    </div>
 
-    <!-- Forgot Password Section -->
-    <div id="forgotPasswordSection" class="hidden min-h-screen flex items-center justify-center gradient-bg p-4">
-        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-            <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Forgot Password</h2>
-            <p class="text-gray-600 text-center mb-4">Enter your email to reset your password</p>
-            <form id="forgotPasswordForm" class="space-y-6">
-                <div>
-                    <label class="block text-gray-700 mb-2">Email</label>
-                    <input type="email" id="resetEmail" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
-                </div>
-                <button type="submit" class="w-full px-8 py-3 bg-[#1e4b7b] text-white rounded-lg hover:bg-[#1e4b7b] transition-colors">Reset Password</button>
-            </form>
-            <div class="text-center mt-4">
-                <a href="#" onclick="showLogin()" class="text-blue-600 hover:underline">Back to Login</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Register Section -->
-    <div id="registerSection" class="hidden min-h-screen flex items-center justify-center gradient-bg p-4">
-        <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-            <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">New Registration</h2>
-            <form id="registerForm" class="space-y-6">
-                <div>
-                    <label class="block text-gray-700 mb-2">Full Name</label>
-                    <input type="text" id="fullName" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Email</label>
-                    <input type="email" id="registerEmail" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Password</label>
-                    <input type="password" id="registerPassword" class="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]" required>
-                </div>
-                <button type="submit" class="w-full px-8 py-3 bg-[#1e4b7b] text-white rounded-lg hover:bg-[#1e4b7b] transition-colors">Register</button>
-            </form>
-            <div class="text-center mt-4">
-                <a href="#" onclick="showLogin()" class="text-blue-600 hover:underline">Back to Login</a>
+        <!-- Right Section: Image Slideshow -->
+        <div class="hidden md:block w-1/2">
+            <div class="slideshow-container">
+                <img src="login1.jpg" class="active">
+                <img src="login2.jpg">
+                <img src="login3.jpg">
             </div>
         </div>
     </div>
 
     <script>
-        function showLogin() {
-            document.getElementById('loginSection').classList.remove('hidden');
-            document.getElementById('forgotPasswordSection').classList.add('hidden');
-            document.getElementById('registerSection').classList.add('hidden');
+        // JavaScript for Image Slideshow
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.slideshow-container img');
+
+        function showSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove("active");
+            });
+
+            slideIndex = (slideIndex + 1) % slides.length;
+            slides[slideIndex].classList.add("active");
         }
-        
-        function showForgotPassword() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('forgotPasswordSection').classList.remove('hidden');
-            document.getElementById('registerSection').classList.add('hidden');
-        }
-        
-        function showRegister() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('forgotPasswordSection').classList.add('hidden');
-            document.getElementById('registerSection').classList.remove('hidden');
-        }
+
+        setInterval(showSlides, 5000); // Change image every 5 seconds
     </script>
 </body>
 </html>
