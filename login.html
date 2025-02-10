@@ -132,7 +132,7 @@
             </div>
             
             <p class="mt-4 text-gray-500">or sign in with</p>
-            <button class="google-btn">
+            <button class="google-btn" onclick="redirectToGoogle()">
                 <i class="bi bi-google"></i> Sign in with Google
             </button>
         </div>
@@ -146,6 +146,10 @@
             autoplay: true,
             path: 'https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json'
         });
+
+        function redirectToGoogle() {
+            window.location.href = "https://accounts.google.com/signin";
+        }
     </script>
 </body>
 </html>
