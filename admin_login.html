@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,16 +116,18 @@
         <div class="right-section">
             <h2 class="text-3xl font-bold text-gray-800 mb-6">Welcome Back</h2>
             <p class="text-gray-600 mb-6">Login with your personal info</p>
-            <form class="w-full">
+            <form class="w-full" id="loginForm">
                 <div class="input-group">
                     <label>Username</label>
-                    <input type="text" required>
+                    <input type="text" name="username" required>
                 </div>
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" required>
+                    <input type="password" name="password" required>
                 </div>
-                <button class="login-btn">Sign In</button>
+                <button class="login-btn" type="submit">Sign In
+                    <a href="admin.html"></a>
+                </button>
             </form>
             
             <div class="extra-links">
@@ -139,6 +142,31 @@
     </div>
 
     <script>
+        document.getElementById("loginForm").addEventListener("submit", async function(e) {
+            e.preventDefault(); // Prevent page reload
+
+            let formData = new FormData(this);
+
+            try {
+                let response = await fetch("login.php", {
+                    method: "POST",
+                    body: formData
+                });
+
+                let result = await response.json();
+                console.log(result);
+
+                if (result.status === "success") {
+                    alert("Login successful!");
+                    window.location.href = "admin.html"; // Redirect to Admin Dashboard
+                } else {
+                    alert("Error: " + result.message);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Login failed. Please try again.");
+            }
+        })
         var animation = lottie.loadAnimation({
             container: document.getElementById('animation'),
             renderer: 'svg',
@@ -146,6 +174,8 @@
             autoplay: true,
             path: 'https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json'
         });
+
+
     </script>
 </body>
 </html>

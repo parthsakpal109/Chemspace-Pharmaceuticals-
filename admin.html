@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -112,7 +114,7 @@
         // Logout function (Now redirects to login page)
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
-                window.location.href = 'login.html'; // Redirect to the login page
+                window.location.href = "logout.php"; // Redirect to the logout page
             }
         }
 
@@ -136,6 +138,21 @@
                 alert("Failed to add product.");
             }
         });
+        async function checkAdminSession() {
+            try {
+                let response = await fetch("admin_check.php");
+                let result = await response.json();
+        
+                if (result.status === "unauthorized") {
+                    window.location.href = "admin_login.html"; // Redirect to login page
+                }
+            } catch (error) {
+                console.error("Error checking session:", error);
+            }
+        }
+        
+        // Run session check on page load
+        document.addEventListener("DOMContentLoaded", checkAdminSession);
     </script>
 </body>
 </html>
