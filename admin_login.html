@@ -146,7 +146,7 @@
             let formData = new FormData(this);
 
             try {
-                let response = await fetch("login.php", {
+                let response = await fetch("simple_login.php", {
                     method: "POST",
                     body: formData
                 });
@@ -165,6 +165,24 @@
                 alert("Login failed. Please try again.");
             }
         })
+
+        async function checkAdminSession() {
+            try {
+                let response = await fetch("C:/xampp/htdocs/MyWebsite/Chemspace-Pharmaceuticals-/admin_check.php");
+                let result = await response.json();
+    
+                // Prevent infinite redirect if already on the login page
+                if (result.status === "unauthorized" && window.location.pathname !== "C:/xampp/htdocs/MyWebsite/Chemspace-Pharmaceuticals-/admin_login.html") {
+                    window.location.href = "admin_login.html";
+                }
+            } catch (error) {
+                console.error("Error checking session:", error);
+            }
+        }
+        
+        document.addEventListener("DOMContentLoaded", checkAdminSession)
+
+        
         var animation = lottie.loadAnimation({
             container: document.getElementById('animation'),
             renderer: 'svg',

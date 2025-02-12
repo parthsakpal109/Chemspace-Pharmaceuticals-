@@ -70,9 +70,13 @@
                             <i class="bi bi-box mr-2"></i>Products
                         </a>
                         <hr class="my-4">
-                        <button onclick="logout()" class="w-full text-left py-2 px-4 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
+                        <a href="logout.php" class="block py-2 px-4 rounded-lg hover:bg-[#3176bf] hover:text-white transition-colors" onclick="return confirm('Are you sure you want to logout?');">
+                            <i class="bi bi-box-arrow-right mr-2"></i> Logout
+                        </a>
+                        
+                        <!-- <button onclick="logout()" class="w-full text-left py-2 px-4 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
                             <i class="bi bi-box-arrow-right mr-2"></i>Logout
-                        </button>
+                        </button> -->
                     </nav>
                 </div>
             </div>
@@ -114,7 +118,7 @@
         // Logout function (Now redirects to login page)
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
-                window.location.href = "C:/xampp/htdocs/MyWebsite/Chemspace-Pharmaceuticals-/login.php"; // Redirect to the logout page
+                window.location.href = "logout.php"; // Redirect to the login page page
             }
         }
 
@@ -139,17 +143,14 @@
             }
         });
         async function checkAdminSession() {
-            try {
-                let response = await fetch("admin_check.php");
-                let result = await response.json();
+            
+            let response = await fetch("admin_check.php");
+            let result = await response.json();
         
-                if (result.status === "unauthorized") {
-                    window.location.href = "admin_login.html"; // Redirect to login page
-                }
-            } catch (error) {
-                console.error("Error checking session:", error);
+            if (result.status === "unauthorized") {
+                window.location.href = "admin_login.html"; // Redirect to login page
             }
-        }
+        } 
         
         // Run session check on page load
         document.addEventListener("DOMContentLoaded", checkAdminSession);
