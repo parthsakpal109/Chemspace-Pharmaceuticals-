@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,11 +26,6 @@
                     <img src="logo1.png" alt="Chemspace Logo" class="h-12">
                 </div>
                 
-                <!-- Mobile Menu Button -->
-                <button id="menuBtn" class="md:hidden text-white hover:text-gray-300">
-                    <i class="bi bi-list text-3xl"></i>
-                </button>
-
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="home.html" class="text-white hover:text-gray-300 transition-colors">Home</a>
@@ -40,49 +34,19 @@
                     <a href="home.html#services" class="text-white hover:text-gray-300 transition-colors">Services</a>
                     <a href="home.html#contact" class="text-white hover:text-gray-300 transition-colors">Contact</a>
                     <a href="admin.html" class="text-white hover:text-gray-300 transition-colors">Admin</a>
+                    <!-- Logout Button -->
+                    <a href="#" onclick="logout()" class="text-white hover:text-gray-300 transition-colors">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
                 </nav>
-            </div>
-        </div>
-
-        <!-- Mobile Navigation -->
-        <div id="mobileMenu" class="hidden md:hidden bg-[#2b6777] w-full">
-            <div class="container mx-auto px-4 py-4 space-y-4">
-                <a href="home.html" class="block text-white hover:text-gray-300">Home</a>
-                <a href="products.html" class="block text-white hover:text-gray-300">Products</a>
-                <a href="home.html#about" class="block text-white hover:text-gray-300">About</a>
-                <a href="home.html#services" class="block text-white hover:text-gray-300">Services</a>
-                <a href="home.html#contact" class="block text-white hover:text-gray-300">Contact</a>
-                <a href="admin.html" class="block text-white hover:text-gray-300">Admin</a>
             </div>
         </div>
     </header>
 
     <div class="container mx-auto px-4 mt-24">
-        <div class="grid md:grid-cols-4 gap-6">
-            <!-- Sidebar -->
-            <div class="md:col-span-1">
-                <div class="bg-white rounded-lg shadow p-6">
-                    <nav class="space-y-4">
-                        <a href="products.html" class="block py-2 px-4 rounded-lg hover:bg-[#3176bf] hover:text-white transition-colors">
-                            <i class="bi bi-speedometer2 mr-2"></i>Dashboard
-                        </a>
-                        <a href="#products" class="block py-2 px-4 rounded-lg hover:bg-[#3176bf] hover:text-white transition-colors">
-                            <i class="bi bi-box mr-2"></i>Products
-                        </a>
-                        <hr class="my-4">
-                        <a href="logout.php" class="block py-2 px-4 rounded-lg hover:bg-[#3176bf] hover:text-white transition-colors" onclick="return confirm('Are you sure you want to logout?');">
-                            <i class="bi bi-box-arrow-right mr-2"></i> Logout
-                        </a>
-                        
-                        <!-- <button onclick="logout()" class="w-full text-left py-2 px-4 rounded-lg hover:bg-red-500 hover:text-white transition-colors">
-                            <i class="bi bi-box-arrow-right mr-2"></i>Logout
-                        </button> -->
-                    </nav>
-                </div>
-            </div>
-
+        <div class="grid md:grid-cols-1 gap-6">
             <!-- Main Content -->
-            <div class="md:col-span-3 space-y-6">
+            <div class="md:col-span-1 space-y-6">
                 <!-- Add Product Form -->
                 <div class="bg-white rounded-lg shadow p-6">
                     <h2 class="text-xl font-bold mb-6 text-[#1e4b7b]">Add New Product</h2>
@@ -142,8 +106,8 @@
                 alert("Failed to add product.");
             }
         });
+
         async function checkAdminSession() {
-            
             let response = await fetch("admin_check.php");
             let result = await response.json();
         
