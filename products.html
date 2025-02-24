@@ -18,6 +18,22 @@
             transform: translateY(-5px);
             transition: all 0.3s ease;
         }
+        .nav-link {
+            position: relative;
+            display: inline-block;
+        }
+        .nav-link span {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: #3b82f6; /* Blue color */
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover span {
+            width: 100%; /* Full width on hover */
+        }
     </style>
 
     <script>
@@ -82,12 +98,24 @@
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8">
-                    <a href="home.html" class="text-white hover:text-gray-300 transition-colors">Home</a>
-                    <a href="products.html" class="text-white hover:text-gray-300 transition-colors">Products</a>
-                    <a href="home.html#about" class="text-white hover:text-gray-300 transition-colors">About</a>
-                    <a href="home.html#services" class="text-white hover:text-gray-300 transition-colors">Services</a>
-                    <a href="home.html#contact" class="text-white hover:text-gray-300 transition-colors">Contact</a>
-                    <a href="admin.html" class="text-white hover:text-gray-300 transition-colors">Admin</a>
+                    <a href="home.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Home
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="products.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Products
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="home.html#about" class="text-white hover:text-blue-200 transition-colors relative group fade-in">About
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="home.html#services" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Services
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="home.html#contact" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Contact
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="admin.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Admin
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
                 </nav>
             </div>
         </div>
