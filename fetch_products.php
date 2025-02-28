@@ -29,8 +29,13 @@ $result = $stmt->get_result();
 $products = [];
 
 while ($row = $result->fetch_assoc()) {
+    // Ensure image column exists and handle NULL values
+    if (!isset($row['image']) || empty($row['image'])) {
+        $row['image'] = "default.png"; // Set default image if missing
+    }
     $products[] = $row;
 }
+
 
 
 /*
@@ -53,4 +58,3 @@ if (empty($products)) {
 echo json_encode($products, JSON_PRETTY_PRINT);
 exit;
 //$conn->close();
-?>
