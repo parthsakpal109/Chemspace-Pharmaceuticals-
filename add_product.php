@@ -39,8 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
          $image_path = "default.png"; // Default image
     }
     // Insert into Database
-    $stmt = $conn->prepare("INSERT INTO products (name, cas_number, description, image, range_value) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $name, $cas_number, $description, $image, $range);
+    $stmt = $conn->prepare("INSERT INTO products (name, cas_number, description, image) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $name, $cas_number, $description, $image);
 
     if ($stmt->execute()) {
         echo "✅ Product added successfully!";

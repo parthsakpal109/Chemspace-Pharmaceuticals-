@@ -35,3 +35,8 @@ Stack trace:
 #0 C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php(42): mysqli->prepare('INSERT INTO pro...')
 #1 {main}
   thrown in C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php on line 42
+[28-Feb-2025 06:21:27 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'range_value' in 'field list' in C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php:42
+Stack trace:
+#0 C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php(42): mysqli->prepare('INSERT INTO pro...')
+#1 {main}
+  thrown in C:\xampp\htdocs\MyWebsite\Chemspace-Pharmaceuticals-\add_product.php on line 42
