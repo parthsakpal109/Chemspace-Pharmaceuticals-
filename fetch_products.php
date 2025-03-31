@@ -8,21 +8,41 @@ if ($conn->connect_error) {
     die(json_encode(["error" => "Database connection failed: " . $conn->connect_error]));
 }
 
-// Get search query from frontend
+// Get filters from URL
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$category = isset($_GET['category']) ? trim($_GET['category']) : '';
 
-error_log("Search Query Received: " . $search); // Debugging log
-
+// Base query
 $sql = "SELECT * FROM products";
+$conditions = [];
+$params = [];
+$types = "";
+
+// Add search condition
 if (!empty($search)) {
-    // Search by product name, CAS number, or category
-    $sql .= " WHERE name LIKE ? OR cas_number LIKE ? OR category_id LIKE ?";
+    $conditions[] = "(name LIKE ? OR cas_number LIKE ?)";
+    $search_param = "%$search%";
+    $params[] = $search_param;
+    $params[] = $search_param;
+    $types .= "ss";
 }
 
+// Add category condition
+if (!empty($category)) {
+    $conditions[] = "category = ?";
+    $params[] = $category;
+    $types .= "s";
+}
+
+// Combine conditions
+if (!empty($conditions)) {
+    $sql .= " WHERE " . implode(" AND ", $conditions);
+}
+
+// Prepare statement
 $stmt = $conn->prepare($sql);
-if (!empty($search)) {
-    $search_param = "%{$search}%";
-    $stmt->bind_param("sss", $search_param, $search_param, $search_param);
+if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
 }
 $stmt->execute();
 $result = $stmt->get_result();
@@ -31,30 +51,16 @@ $products = [];
 while ($row = $result->fetch_assoc()) {
     // Ensure image column exists and handle NULL values
     if (!isset($row['image']) || empty($row['image'])) {
-        $row['image'] = "default.png"; // Set default image if missing
+        $row['image'] = "default.png";
     }
     $products[] = $row;
 }
 
-
-
-/*
-// Fetch products (without requiring 'image' column)
-$sql = "SELECT id, name, cas_number, formula, description FROM products";
-$result = $conn->query($sql);
-
-$products = [];
-while ($row = $result->fetch_assoc()) {
-    // Assign a default image if the image column does not exist
-    $row['image'] = "default.png"; // Placeholder image (optional)
-    $products[] = $row;
-}
-*/
-// Check if products exist
+// Output
 if (empty($products)) {
-    die(json_encode(["error" => "No products found in the database."]));
+    echo json_encode([]);
+    exit;
 }
 
 echo json_encode($products, JSON_PRETTY_PRINT);
 exit;
-//$conn->close();
