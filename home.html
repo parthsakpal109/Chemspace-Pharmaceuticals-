@@ -135,14 +135,52 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                     <div class="p-6 bg-gray-50 rounded-lg text-center hover:scale-105 transition-transform duration-300 animate-bounce">
-                        <h3 class="text-2xl font-semibold text-[#2b6777] mb-2">20+ Years</h3>
+                        <h3 class="text-2xl font-semibold text-[#2b6777] mb-2">18+ Years</h3>
                         <p class="text-gray-600 text-lg">Industry Experience</p>
                     </div>
                     <div class="p-6 bg-gray-50 rounded-lg text-center hover:scale-105 transition-transform duration-300 animate-bounce">
-                        <h3 class="text-2xl font-semibold text-[#2b6777] mb-2">1000+</h3>
+                        <h3 class="text-2xl font-semibold text-[#2b6777] mb-2">100+</h3>
                         <p class="text-gray-600 text-lg">Products Delivered</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Image Slider Section -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="relative overflow-hidden rounded-xl shadow-xl">
+            <div id="slider" class="flex transition-transform duration-500 ease-in-out">
+                <div class="w-full flex-shrink-0">
+                    <img src="slide1.jpg" alt="Slide 1" class="w-full h-[500px] object-cover">
+                </div>
+                <div class="w-full flex-shrink-0">
+                    <img src="slide2.jpg" alt="Slide 2" class="w-full h-[500px] object-cover">
+                </div>
+                <div class="w-full flex-shrink-0">
+                    <img src="slide3.jpg" alt="Slide 3" class="w-full h-[500px] object-cover">
+                </div>
+                <div class="w-full flex-shrink-0">
+                    <img src="slide4.jpg" alt="Slide 4" class="w-full h-[500px] object-cover">
+                </div>
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-colors">
+                <i class="bi bi-chevron-left text-2xl"></i>
+            </button>
+            <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-colors">
+                <i class="bi bi-chevron-right text-2xl"></i>
+            </button>
+            
+            <!-- Dots Navigation -->
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors dot active"></button>
+                <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors dot"></button>
+                <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors dot"></button>
+                <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-colors dot"></button>
             </div>
         </div>
     </div>
@@ -186,12 +224,12 @@
 
 
     <!-- Services Section -->
-    <section id="services" class="py-20 bg-gray-50">
+    <section id="services" class="py-20 bg-gray-100">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 fade-in">Our Services</h2>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in">
-                    <i class="bi bi-flask text-4xl text-[#2b6777] mb-4"></i>
+                    <i class="bi bi-thermometer text-4xl text-[#2b6777] mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Custom Synthesis</h3>
                     <p class="text-gray-600">Tailored solutions to meet your specific chemical needs with precision and care.</p>
                 </div>
@@ -204,6 +242,21 @@
                     <i class="bi bi-shield-check text-4xl text-[#2b6777] mb-4"></i>
                     <h3 class="text-xl font-semibold mb-4">Quality Control</h3>
                     <p class="text-gray-600">Rigorous testing and quality assurance for all our products.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in" style="animation-delay: 0.6s;">
+                    <i class="bi bi-graph-up text-4xl text-[#2b6777] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4">Research & Development</h3>
+                    <p class="text-gray-600">Cutting-edge research facilities for developing innovative pharmaceutical solutions.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in" style="animation-delay: 0.8s;">
+                    <i class="bi bi-file-earmark-text text-4xl text-[#2b6777] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4">Regulatory Support</h3>
+                    <p class="text-gray-600">Comprehensive assistance with regulatory compliance and documentation.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in" style="animation-delay: 1s;">
+                    <i class="bi bi-people text-4xl text-[#2b6777] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4">Technical Consultation</h3>
+                    <p class="text-gray-600">Expert guidance and technical support for your pharmaceutical projects.</p>
                 </div>
             </div>
         </div>
@@ -324,6 +377,44 @@
         faders.forEach(fader => {
             appearOnScroll.observe(fader);
         });
+
+        // Image Slider Functionality
+        const slider = document.getElementById('slider');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+        const totalSlides = 4;
+
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+            });
+        });
+
+        // Auto slide every 5 seconds
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }, 5000);
     </script>
 </body>
 </html>
