@@ -1,0 +1,85 @@
+<?php
+session_start();
+
+// Check if admin is logged in
+if (!isset($_SESSION["admin_id"])) {
+    header("Location: admin_login.html");
+    exit;
+}
+
+// Connect to MySQL
+$conn = new mysqli("localhost", "root", "", "pharma_db");
+
+if ($conn->connect_error) {
+    die("Database connection failed: " . $conn->connect_error);
+}
+
+// Check if product ID is provided
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    die("Error: Product ID is required.");
+}
+
+$product_id = intval($_GET['id']);
+
+// Fetch product data
+$stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
+$stmt->bind_param("i", $product_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    die("Error: Product not found.");
+}
+
+$product = $result->fetch_assoc();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - Chemspace Pharmaceuticals</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Product</h1>
+        <form action="update_product.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+            
+            <div class="form-group">
+                <label for="name">Product Name</label>
+                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($product['name']); ?>" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cas_number">CAS Number</label>
+                <input type="text" id="cas_number" name="cas_number" value="<?php echo htmlspecialchars($product['cas_number']); ?>" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required><?php echo htmlspecialchars($product['description']); ?></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="image">Product Image</label>
+                <?php if (!empty($product['image'])): ?>
+                <div class="current-image">
+                    <p>Current image:</p>
+                    <img src="uploads/<?php echo htmlspecialchars($product['image']); ?>" width="100" alt="Current Product Image">
+                </div>
+                <?php endif; ?>
+                <input type="file" id="image" name="image">
+                <small>Leave empty to keep current image</small>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Update Product</button>
+                <a href="admin.html" class="btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

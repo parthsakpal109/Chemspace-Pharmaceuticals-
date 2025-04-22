@@ -38,6 +38,89 @@
             width: 100%;
             /* Full width on hover */
         }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 5px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .close,
+        .close-modal {
+            color: #aaa;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            height: 20%;
+        }
+
+        .close:hover,
+        .close-modal:hover {
+            color: black;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #current_image_container {
+            margin: 10px 0;
+        }
+
+        #current_image_container img {
+            max-width: 100px;
+            max-height: 100px;
+            border: 1px solid #ddd;
+            padding: 3px;
+        }
+
+        .success-message {
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            transition: opacity 0.5s;
+        }
     </style>
 </head>
 
@@ -127,10 +210,10 @@
                                 class="px-6 py-3 bg-[#3176bf] text-white rounded-lg hover:bg-[#4d8bcc] transition-colors">
                                 Add Product
                             </button>
-                            
+
                         </div>
                     </form>
-                    
+
 
                 </div>
             </div>
@@ -161,6 +244,50 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Product Modal -->
+    <div id="editProductModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2 class="text-xl font-bold mb-6 text-[#1e4b7b]">Edit Product</h2>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm">
+                    <input type="hidden" id="edit_product_id" name="product_id">
+
+                    <div class="form-group">
+                        <label for="edit_name">Product Name</label>
+                        <input type="text" id="edit_name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit_cas_number">CAS Number</label>
+                        <input type="text" id="edit_cas_number" name="cas_number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit_description">Description</label>
+                        <textarea id="edit_description" name="description" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit_image">Product Image</label>
+                        <div id="current_image_container"></div>
+                        <input type="file" id="edit_image" name="image">
+                        <small>Leave empty to keep current image</small>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">Update Product</button>
+                        <button type="button" class="bg-red-500 text-white px-2 py-1 rounded close-modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
     <script>
         // Logout function (Now redirects to login page)
@@ -203,11 +330,7 @@
         // Run session check on page load
         document.addEventListener("DOMContentLoaded", checkAdminSession);
 
-        // Edit Product function (Placeholder for future functionality)
-        function editProduct() {
-            alert("Edit product functionality coming soon!");
-        }
-
+        
         // Fetch and display products
         async function fetchProducts() {
             try {
@@ -255,8 +378,38 @@
 
         // Function to handle editing (Currently placeholder)
         function editProduct(productId) {
-            alert("Edit functionality coming soon for product ID: " + productId);
+            window.location.href = `edit_product.php?id=${productId}`;
         }
+
+        function editProduct(productId) {
+            // Fetch product data
+            fetch(`fetch_products.php?id=${productId}`)
+                .then(response => response.json())
+                .then(product => {
+                    // Populate form fields
+                    document.getElementById('edit_product_id').value = product.id;
+                    document.getElementById('edit_name').value = product.name;
+                    document.getElementById('edit_cas_number').value = product.cas_number;
+                    document.getElementById('edit_description').value = product.description;
+                    
+                    // Show current image if exists
+                    const imageContainer = document.getElementById('current_image_container');
+                    if (product.image && product.image !== 'default.png') {
+                        imageContainer.innerHTML = `<p>Current image:</p><img src="uploads/${product.image}" alt="Current Product Image" class="h-12 w-12 rounded">`;
+                    } else {
+                        imageContainer.innerHTML = '<p>No image available</p>';
+                    }
+                    
+                    // Show modal
+                    document.getElementById('editProductModal').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching product:', error);
+                    alert('Failed to load product data');
+                });
+        }
+        
+        
 
         // Run fetchProducts() on page load
         document.addEventListener("DOMContentLoaded", fetchProducts);
@@ -306,6 +459,53 @@
                 }
             }
         }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Close modal when clicking X or Cancel button
+            document.querySelectorAll('.close, .close-modal').forEach(element => {
+                element.addEventListener('click', function() {
+                    document.getElementById('editProductModal').style.display = 'none';
+                });
+            });
+            
+            // Close modal when clicking outside the modal content
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('editProductModal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Handle edit form submission
+            document.getElementById('editProductForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                
+                fetch('update_product.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Show success message
+                        alert(data.message);
+                        
+                        // Close modal and refresh product list
+                        document.getElementById('editProductModal').style.display = 'none';
+                        fetchProducts();
+                    } else {
+                        alert(data.message || 'Failed to update product');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating product:', error);
+                    alert('Failed to update product');
+                });
+            });
+        });
+        
+
 
         // Run fetchProducts() when page loads
         document.addEventListener("DOMContentLoaded", fetchProducts);

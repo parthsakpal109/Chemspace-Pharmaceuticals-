@@ -8,6 +8,35 @@ if ($conn->connect_error) {
     die(json_encode(["error" => "Database connection failed: " . $conn->connect_error]));
 }
 
+// Check if a specific product ID is requested
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $product_id = intval($_GET['id']);
+    
+    // Fetch single product
+    $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $product = $result->fetch_assoc();
+        
+        // Handle NULL image
+        if (!isset($product['image']) || empty($product['image'])) {
+            $product['image'] = "default.png";
+        }
+        
+        echo json_encode($product);
+    } else {
+        echo json_encode(["error" => "Product not found"]);
+    }
+    
+    $stmt->close();
+    $conn->close();
+    exit;
+}
+
+
 // Get filters from URL
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $category = isset($_GET['category']) ? trim($_GET['category']) : '';
@@ -29,9 +58,9 @@ if (!empty($search)) {
 
 // Add category condition
 if (!empty($category)) {
-    $conditions[] = "category = ?";
+    $conditions[] = "category_id = ?";
     $params[] = $category;
-    $types .= "s";
+    $types .= "i";
 }
 
 // Combine conditions
@@ -63,4 +92,6 @@ if (empty($products)) {
 }
 
 echo json_encode($products, JSON_PRETTY_PRINT);
+$stmt->close();
+$conn->close();
 exit;
