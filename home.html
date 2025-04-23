@@ -193,39 +193,59 @@
 </section>
 
 <style>
-    /* Add custom animations */
-    @keyframes bounce {
-        0%, 100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(-10px);
-        }
-    }
+    /* Improved Bounce Animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+    animation-timing-function: ease-in-out;
+  }
+  25% {
+    transform: translateY(-8px);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+  75% {
+    transform: translateY(-4px);
+  }
+}
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.95); }
-        to { opacity: 1; transform: scale(1); }
-    }
+.animate-bounce {
+  animation: bounce 1.5s infinite;
+}
 
-    .animate-bounce {
-        animation: bounce 1s infinite;
-    }
+/* Enhanced Fade-In with Scale and Slide */
+@keyframes fadeInScaleSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
-    .fade-in {
-        animation: fadeIn 0.5s ease-in-out forwards;
-        opacity: 0;
-    }
+.fade-in {
+  animation: fadeInScaleSlide 0.8s ease-out forwards;
+  opacity: 0;
+}
 
-    .animate-fade-in-scale {
-        animation: fadeIn 0.5s ease-in-out forwards;
-    }
+.animate-fade-in-scale {
+  animation: fadeInScaleSlide 0.8s ease-out forwards;
+}
 
-    /* Additional styles for image responsiveness */
-    img {
-        max-width: 100%;
-        height: auto;
-    }
+/* Responsive image tweaks */
+img {
+  max-width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.03);
+}
+
 </style>
 
 
