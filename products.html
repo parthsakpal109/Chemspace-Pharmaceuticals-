@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - Chemspace Pharmaceuticals</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
@@ -138,7 +139,7 @@
             <div class="max-w-2xl mx-auto mb-6">
                 <div class="flex flex-col md:flex-row gap-4">
                     <input type="text" id="search" placeholder="Search by CAS No or Product Name"
-                        class="flex-1 px-6 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#52ab98]"
+                        class="flex-1 px-6 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#52ab98] "
                         onkeyup="fetchProducts()">
                     <button onclick="fetchProducts()"
                         class="px-8 py-3 bg-[#3176bf] text-white rounded-lg hover:bg-[#4d8bcc] transition-colors">
@@ -163,8 +164,145 @@
         </div>
     </div>
 
-    <!-- FOOTER OMITTED FOR BREVITY (same as yours) -->
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get the search input element
+            const searchInput = document.getElementById('searchInput');
+
+            // Add event listener for input changes (as user types)
+            searchInput.addEventListener('input', function () {
+                const searchTerm = this.value.trim();
+                fetchFilteredProducts(searchTerm);
+            });
+
+            // Function to fetch filtered products
+            function fetchFilteredProducts(searchTerm) {
+                // Construct URL with search parameter
+                const url = searchTerm
+                    ? `fetch_products.php?search=${encodeURIComponent(searchTerm)}`
+                    : 'fetch_products.php';
+
+                // Fetch products from server
+                fetch(url)
+                    .then(response => response.json())
+                    .then(products => {
+                        displayProducts(products);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching products:', error);
+                    });
+            }
+
+            // Function to display products in the DOM
+            function displayProducts(products) {
+                const productsContainer = document.getElementById('productsContainer');
+
+                // Clear current products
+                productsContainer.innerHTML = '';
+
+                if (products.length === 0) {
+                    productsContainer.innerHTML = '<p class="no-results">No products found matching your search.</p>';
+                    return;
+                }
+
+                // Create HTML for each product
+                products.forEach(product => {
+                    const productElement = document.createElement('div');
+                    productElement.className = 'product-card';
+                    productElement.innerHTML = `
+                        <div class="product-image">
+                            <img src="uploads/${product.image || 'default.png'}" alt="${product.name}">
+                        </div>
+                        <div class="product-details">
+                            <h3>${product.name}</h3>
+                            <p class="cas-number">CAS: ${product.cas_number}</p>
+                            <p class="description">${product.description}</p>
+                        </div>
+                    `;
+                    productsContainer.appendChild(productElement);
+                });
+            }
+
+            // Load all products when page loads
+            fetchFilteredProducts('');
+        });
+
+        // Function to fetch and display products based on search input
+        async function fetchProducts() {
+            try {
+                // Get search term from input
+                const searchTerm = document.getElementById('search').value.trim();
+
+                // Show loading indicator (optional)
+                const productsGrid = document.getElementById('productsGrid');
+                productsGrid.innerHTML = '<div class="col-span-full text-center py-8"><div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#52ab98]"></div><p class="mt-2 text-gray-600">Loading products...</p></div>';
+
+                // Construct URL with search parameter if provided
+                let url = 'fetch_products.php';
+                if (searchTerm) {
+                    url += `?search=${encodeURIComponent(searchTerm)}`;
+                }
+
+                // Fetch products from server
+                const response = await fetch(url);
+                const products = await response.json();
+
+                // Clear products grid
+                productsGrid.innerHTML = '';
+
+                // Display message if no products found
+                if (products.length === 0) {
+                    productsGrid.innerHTML = '<div class="col-span-full text-center py-8"><p class="text-xl text-gray-600">No products found matching your search.</p></div>';
+                    return;
+                }
+
+                // Display each product
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105';
+
+                    productCard.innerHTML = `
+                <div class="h-48 overflow-hidden bg-gray-100 flex items-center justify-center">
+                    <img src="uploads/${product.image || 'default.png'}" alt="${product.name}" class="w-full h-full object-contain p-4">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">${product.name}</h3>
+                    <p class="text-sm text-gray-600 mb-3">CAS: ${product.cas_number}</p>
+                    <p class="text-gray-700">${product.description.length > 100 ? product.description.substring(0, 100) + '...' : product.description}</p>
+                </div>
+            `;
+
+                    productsGrid.appendChild(productCard);
+                });
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                document.getElementById('productsGrid').innerHTML = '<div class="col-span-full text-center py-8"><p class="text-xl text-red-600">Error loading products. Please try again later.</p></div>';
+            }
+        }
+
+        // Debounce function to limit how often fetchProducts is called during typing
+        function debounce(func, timeout = 300) {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            };
+        }
+
+        // Apply debouncing to search input
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search');
+
+            // Replace the direct onkeyup with a debounced version
+            searchInput.removeAttribute('onkeyup');
+            searchInput.addEventListener('input', debounce(fetchProducts, 500));
+
+            // Load all products when page loads
+            fetchProducts();
+        });
+
+    </script>
 </body>
 
 </html>

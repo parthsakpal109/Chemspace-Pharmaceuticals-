@@ -36,7 +36,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     exit;
 }
 
-
 // Get filters from URL
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $category = isset($_GET['category']) ? trim($_GET['category']) : '';
@@ -86,12 +85,8 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Output
-if (empty($products)) {
-    echo json_encode([]);
-    exit;
-}
-
 echo json_encode($products, JSON_PRETTY_PRINT);
 $stmt->close();
 $conn->close();
 exit;
+?>
