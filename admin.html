@@ -130,46 +130,56 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center">
-                    <img src="logo1.png" alt="Chemspace Logo" class="h-12">
+                    <a href="home.html">
+                        <img src="logo1.png" alt="Chemspace Logo" class="h-12">
+                    </a>
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menuBtn" class="md:hidden text-white hover:text-gray-300 focus:outline-none">
+                    <i class="bi bi-list text-3xl"></i>
+                </button>
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8">
-                    <a href="home.html"
-                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Home
-                        <span
-                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="home.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Home
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="products.html"
-                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Products
-                        <span
-                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="products.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Products
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="home.html#about"
-                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">About
-                        <span
-                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="home.html#about" class="text-white hover:text-blue-200 transition-colors relative group fade-in">About
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="home.html#services"
-                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Services
-                        <span
-                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="home.html#services" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Services
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="home.html#contact"
-                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Contact
-                        <span
-                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="home.html#contact" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Contact
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="admin.html"
-                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Admin
-                        <span
-                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="admin.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Admin
+                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <!-- Logout Button -->
                     <a href="#" onclick="logout()" class="text-white hover:text-blue-200 transition-colors">
                         <i class="bi bi-box-arrow-right"></i> Logout
                     </a>
                 </nav>
+
+                <!-- Mobile Navigation -->
+                <div id="mobileMenu" class="hidden md:hidden fixed top-20 left-0 right-0 bg-[#2b6777] w-full z-50">
+                    <div class="container mx-auto px-4 py-4 space-y-4">
+                        <a href="home.html" class="block text-white hover:text-gray-300 fade-in">Home</a>
+                        <a href="products.html" class="block text-white hover:text-gray-300 fade-in">Products</a>
+                        <a href="home.html#about" class="block text-white hover:text-gray-300 fade-in">About</a>
+                        <a href="home.html#services" class="block text-white hover:text-gray-300 fade-in">Services</a>
+                        <a href="home.html#contact" class="block text-white hover:text-gray-300 fade-in">Contact</a>
+                        <a href="admin.html" class="block text-white hover:text-gray-300 fade-in">Admin</a>
+                        <a href="#" onclick="logout()" class="block text-white hover:text-gray-300 fade-in">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -290,6 +300,14 @@
 
 
     <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
         // Logout function (Now redirects to login page)
         function logout() {
             if (confirm('Are you sure you want to logout?')) {

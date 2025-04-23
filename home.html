@@ -38,13 +38,10 @@
 <body class="bg-gray-50">
 
     <!-- Header -->
-<header
-class="fixed w-full top-0 z-50 bg-[#1e4b7b] shadow-md transition-transform duration-300"
-id="mainHeader"
->
-<div class="container mx-auto px-4">
-  <div class="flex justify-between items-center h-20">
-    <div class="flex items-center">
+    <header class="fixed w-full top-0 z-50 bg-[#1e4b7b] shadow-md transition-transform duration-300" id="mainHeader">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
       <!-- Logo as reload button -->
       <img
         src="Logo CPL.png"
@@ -52,7 +49,7 @@ id="mainHeader"
         class="h-12 fade-in cursor-pointer"
         onclick="window.location.reload()"
       >
-    </div>  
+                </div>
 
                 <!-- Mobile Menu Button -->
                 <button id="menuBtn" class="md:hidden text-white hover:text-gray-300 focus:outline-none">
@@ -82,13 +79,13 @@ id="mainHeader"
                 </nav>
 
                 <!-- Mobile Navigation -->
-                <div id="mobileMenu" class="hidden md:hidden bg-[#2b6777] w-full">
+                <div id="mobileMenu" class="hidden md:hidden fixed top-20 left-0 right-0 bg-[#2b6777] w-full z-50">
                     <div class="container mx-auto px-4 py-4 space-y-4">
                         <a href="#home" class="block text-white hover:text-gray-300 fade-in">Home</a>
                         <a href="products.html" class="block text-white hover:text-gray-300 fade-in">Products</a>
                         <a href="#about" class="block text-white hover:text-gray-300 fade-in">About</a>
                         <a href="#services" class="block text-white hover:text-gray-300 fade-in">Services</a>
-                        <a href="#contact" class="block text-white hover:text-gray-300">Contact</a>
+                        <a href="#contact" class="block text-white hover:text-gray-300 fade-in">Contact</a>
                         <a href="admin.html" class="block text-white hover:text-gray-300 fade-in">Admin</a>
                     </div>
                 </div>
