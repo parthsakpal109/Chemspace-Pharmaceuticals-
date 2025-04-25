@@ -13,49 +13,31 @@
             scroll-behavior: smooth;
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
             background: linear-gradient(135deg, #2c3e50 0%, #4a4a4a 50%, #f39c12 100%);
             background-attachment: fixed;
         }
-
         .gradient-bg {
-            background: linear-gradient(135deg, 
-                #1a2a3a 0%, 
-                #2c3e50 25%, 
-                #4a4a4a 50%, 
-                #f39c12 75%, 
-                #e67e22 100%
-            );
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 25%, #4a4a4a 50%, #f39c12 75%, #e67e22 100%);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
         }
-
         .btn-hover:hover {
             transform: translateY(-2px);
             transition: all 0.3s ease;
         }
-
-        /* Add a subtle fade-in animation */
         .fade-in {
             animation: fadeIn 0.5s ease-in-out forwards;
             opacity: 0;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
@@ -122,18 +104,13 @@
         <div class="container mx-auto px-4">
             <div class="text-center">
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 fade-in" style="animation-delay: 0.2s; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Welcome to Chemspace Pharmaceuticals</h1>
-                
                 <p class="text-xl text-white mb-8 fade-in" style="animation-delay: 0.4s; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">Your one-stop solution for custom chemical synthesis and bulk supply</p>
 
-                <!-- Search Bar -->
-                <div class="max-w-2xl mx-auto fade-in" style="animation-delay: 0.6s;">
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <input type="text" placeholder="Search by CAS No or Product Name"
-                               class="flex-1 px-6 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-[#f39c12] shadow-md bg-white/90 backdrop-blur-sm">
-                        <button class="px-8 py-3 bg-[#f39c12] text-white rounded-full hover:bg-[#e67e22] transition-colors btn-hover shadow-md">
-                            <i class="bi bi-search mr-2"></i>Search
-                        </button>
-                    </div>
+                <!-- Replaced Search Bar with Centered Button -->
+                <div class="fade-in" style="animation-delay: 0.6s;">
+                    <button class="px-10 py-3 bg-[#f39c12] text-white text-lg rounded-full hover:bg-[#e67e22] transition-colors btn-hover shadow-lg">
+                        Discover our products
+                    </button>
                 </div>
             </div>
         </div>
@@ -164,7 +141,7 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                     <div class="p-6 bg-gradient-to-r from-[#2c3e50] to-[#4a4a4a] rounded-lg text-center hover:scale-105 transition-transform duration-300 animate-bounce">
                         <h3 class="text-2xl font-semibold text-white mb-2">18+ Years</h3>
                         <p class="text-gray-200 text-lg">Industry Experience</p>
@@ -172,6 +149,10 @@
                     <div class="p-6 bg-gradient-to-r from-[#f39c12] to-[#e67e22] rounded-lg text-center hover:scale-105 transition-transform duration-300 animate-bounce">
                         <h3 class="text-2xl font-semibold text-white mb-2">100+</h3>
                         <p class="text-gray-200 text-lg">Products Delivered</p>
+                    </div>
+                    <div class="p-6 bg-gradient-to-r from-[#2c3e50] to-[#4a4a4a] rounded-lg text-center hover:scale-105 transition-transform duration-300 animate-bounce">
+                        <h3 class="text-2xl font-semibold text-white mb-2">ISO Recognized</h3>
+                        <p class="text-gray-200 text-lg">Certificate Number: CP/QM/2503044</p>
                     </div>
                 </div>
             </div>
