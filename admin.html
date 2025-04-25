@@ -16,13 +16,12 @@
         }
 
         .gradient-bg {
-            background: linear-gradient(135deg, 
-                #1a2a3a 0%, 
-                #2c3e50 25%, 
-                #4a4a4a 50%, 
-                #f39c12 75%, 
-                #e67e22 100%
-            );
+            background: linear-gradient(135deg,
+                    #1a2a3a 0%,
+                    #2c3e50 25%,
+                    #4a4a4a 50%,
+                    #f39c12 75%,
+                    #e67e22 100%);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
         }
@@ -31,9 +30,11 @@
             0% {
                 background-position: 0% 50%;
             }
+
             50% {
                 background-position: 100% 50%;
             }
+
             100% {
                 background-position: 0% 50%;
             }
@@ -45,8 +46,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .nav-link {
@@ -100,6 +108,10 @@
             margin-bottom: 20px;
         }
 
+        .modal-title {
+            margin: 0;
+        }
+
         .close,
         .close-modal {
             color: #aaa;
@@ -151,6 +163,32 @@
             border-radius: 4px;
             transition: opacity 0.5s;
         }
+
+        .actions-column {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #4CAF50;
+            /* Same green color as add product button */
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            /* Red color for delete */
+            color: white;
+        }
     </style>
 </head>
 
@@ -172,23 +210,35 @@
 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-8">
-                    <a href="home.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Home
-                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="home.html"
+                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Home
+                        <span
+                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="products.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Products
-                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="products.html"
+                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Products
+                        <span
+                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="home.html#about" class="text-white hover:text-blue-200 transition-colors relative group fade-in">About
-                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="home.html#about"
+                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">About
+                        <span
+                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="home.html#services" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Services
-                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="home.html#services"
+                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Services
+                        <span
+                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="home.html#footer" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Contact
-                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="home.html#footer"
+                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Contact
+                        <span
+                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="admin.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Admin
-                        <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
+                    <a href="admin.html"
+                        class="text-white hover:text-blue-200 transition-colors relative group fade-in">Admin
+                        <span
+                            class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <!-- Logout Button -->
                     <a href="#" onclick="logout()" class="text-white hover:text-blue-200 transition-colors">
@@ -199,13 +249,20 @@
                 <!-- Mobile Navigation -->
                 <div id="mobileMenu" class="hidden md:hidden fixed top-20 left-0 right-0 bg-[#2c3e50] w-full z-50">
                     <div class="container mx-auto px-4 py-4 space-y-4">
-                        <a href="home.html" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Home</a>
-                        <a href="products.html" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Products</a>
-                        <a href="home.html#about" class="block text-white hover:text-[#f39c12] transition-colors fade-in">About</a>
-                        <a href="home.html#services" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Services</a>
-                        <a href="home.html#footer" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Contact</a>
-                        <a href="admin.html" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Admin</a>
-                        <a href="#" onclick="logout()" class="block text-white hover:text-[#f39c12] transition-colors fade-in">
+                        <a href="home.html"
+                            class="block text-white hover:text-[#f39c12] transition-colors fade-in">Home</a>
+                        <a href="products.html"
+                            class="block text-white hover:text-[#f39c12] transition-colors fade-in">Products</a>
+                        <a href="home.html#about"
+                            class="block text-white hover:text-[#f39c12] transition-colors fade-in">About</a>
+                        <a href="home.html#services"
+                            class="block text-white hover:text-[#f39c12] transition-colors fade-in">Services</a>
+                        <a href="home.html#footer"
+                            class="block text-white hover:text-[#f39c12] transition-colors fade-in">Contact</a>
+                        <a href="admin.html"
+                            class="block text-white hover:text-[#f39c12] transition-colors fade-in">Admin</a>
+                        <a href="#" onclick="logout()"
+                            class="block text-white hover:text-[#f39c12] transition-colors fade-in">
                             <i class="bi bi-box-arrow-right"></i> Logout
                         </a>
                     </div>
@@ -317,7 +374,8 @@
 
                     <div class="form-actions">
                         <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">Update Product</button>
-                        <button type="button" class="bg-red-500 text-white px-2 py-1 rounded close-modal">Cancel</button>
+                        <button type="button"
+                            class="bg-red-500 text-white px-2 py-1 rounded close-modal">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -373,7 +431,7 @@
         // Run session check on page load
         document.addEventListener("DOMContentLoaded", checkAdminSession);
 
-        
+
         // Fetch and display products
         async function fetchProducts() {
             try {
@@ -434,7 +492,7 @@
                     document.getElementById('edit_name').value = product.name;
                     document.getElementById('edit_cas_number').value = product.cas_number;
                     document.getElementById('edit_description').value = product.description;
-                    
+
                     // Show current image if exists
                     const imageContainer = document.getElementById('current_image_container');
                     if (product.image && product.image !== 'default.png') {
@@ -442,7 +500,7 @@
                     } else {
                         imageContainer.innerHTML = '<p>No image available</p>';
                     }
-                    
+
                     // Show modal
                     document.getElementById('editProductModal').style.display = 'block';
                 })
@@ -451,8 +509,8 @@
                     alert('Failed to load product data');
                 });
         }
-        
-        
+
+
 
         // Run fetchProducts() on page load
         document.addEventListener("DOMContentLoaded", fetchProducts);
@@ -477,9 +535,9 @@
                 <td class="py-2 px-4 border">
                     ${product.image !== "default.png" ? `<img src="uploads/${product.image}" class="h-12 w-12 rounded">` : "No Image"}
                 </td>
-                <td class="py-2 px-4 border">
-                    <button class="bg-yellow-500 text-white px-3 py-1 rounded" onclick="editProduct(${product.id})">Edit</button>
-                    <button class="bg-red-500 text-white px-3 py-1 rounded ml-2" onclick="deleteProduct(${product.id})">Delete</button>
+                <td class="actions-column py-2 px-4 border">
+                    <button class="edit-btn bg-yellow-500 text-white px-3 py-1 rounded" onclick="editProduct(${product.id})">Edit</button>
+                    <button class="delete-btn bg-red-500 text-white px-3 py-1 rounded ml-2" onclick="deleteProduct(${product.id})">Delete</button>
                 </td>
             `;
                     tableBody.appendChild(row);
@@ -502,52 +560,52 @@
                 }
             }
         }
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Close modal when clicking X or Cancel button
             document.querySelectorAll('.close, .close-modal').forEach(element => {
-                element.addEventListener('click', function() {
+                element.addEventListener('click', function () {
                     document.getElementById('editProductModal').style.display = 'none';
                 });
             });
-            
+
             // Close modal when clicking outside the modal content
-            window.addEventListener('click', function(event) {
+            window.addEventListener('click', function (event) {
                 const modal = document.getElementById('editProductModal');
                 if (event.target === modal) {
                     modal.style.display = 'none';
                 }
             });
-            
+
             // Handle edit form submission
-            document.getElementById('editProductForm').addEventListener('submit', function(e) {
+            document.getElementById('editProductForm').addEventListener('submit', function (e) {
                 e.preventDefault();
-                
+
                 const formData = new FormData(this);
-                
+
                 fetch('update_product.php', {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        // Show success message
-                        alert(data.message);
-                        
-                        // Close modal and refresh product list
-                        document.getElementById('editProductModal').style.display = 'none';
-                        fetchProducts();
-                    } else {
-                        alert(data.message || 'Failed to update product');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error updating product:', error);
-                    alert('Failed to update product');
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            // Show success message
+                            alert(data.message);
+
+                            // Close modal and refresh product list
+                            document.getElementById('editProductModal').style.display = 'none';
+                            fetchProducts();
+                        } else {
+                            alert(data.message || 'Failed to update product');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating product:', error);
+                        alert('Failed to update product');
+                    });
             });
         });
-        
+
 
 
         // Run fetchProducts() when page loads
