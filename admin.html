@@ -16,7 +16,37 @@
         }
 
         .gradient-bg {
-            background: linear-gradient(135deg, #1e4b7b 0%, #1e4b7b 100%);
+            background: linear-gradient(135deg, 
+                #1a2a3a 0%, 
+                #2c3e50 25%, 
+                #4a4a4a 50%, 
+                #f39c12 75%, 
+                #e67e22 100%
+            );
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .nav-link {
@@ -126,7 +156,7 @@
 
 <body class="bg-gray-50">
     <!-- Admin Header -->
-    <header class="fixed w-full top-0 z-50 bg-[#1e4b7b] shadow-md">
+    <header class="fixed w-full top-0 z-50 bg-[#2c3e50] shadow-md">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center">
@@ -154,7 +184,7 @@
                     <a href="home.html#services" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Services
                         <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="home.html#contact" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Contact
+                    <a href="home.html#footer" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Contact
                         <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="admin.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Admin
@@ -167,15 +197,15 @@
                 </nav>
 
                 <!-- Mobile Navigation -->
-                <div id="mobileMenu" class="hidden md:hidden fixed top-20 left-0 right-0 bg-[#2b6777] w-full z-50">
+                <div id="mobileMenu" class="hidden md:hidden fixed top-20 left-0 right-0 bg-[#2c3e50] w-full z-50">
                     <div class="container mx-auto px-4 py-4 space-y-4">
-                        <a href="home.html" class="block text-white hover:text-gray-300 fade-in">Home</a>
-                        <a href="products.html" class="block text-white hover:text-gray-300 fade-in">Products</a>
-                        <a href="home.html#about" class="block text-white hover:text-gray-300 fade-in">About</a>
-                        <a href="home.html#services" class="block text-white hover:text-gray-300 fade-in">Services</a>
-                        <a href="home.html#contact" class="block text-white hover:text-gray-300 fade-in">Contact</a>
-                        <a href="admin.html" class="block text-white hover:text-gray-300 fade-in">Admin</a>
-                        <a href="#" onclick="logout()" class="block text-white hover:text-gray-300 fade-in">
+                        <a href="home.html" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Home</a>
+                        <a href="products.html" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Products</a>
+                        <a href="home.html#about" class="block text-white hover:text-[#f39c12] transition-colors fade-in">About</a>
+                        <a href="home.html#services" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Services</a>
+                        <a href="home.html#footer" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Contact</a>
+                        <a href="admin.html" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Admin</a>
+                        <a href="#" onclick="logout()" class="block text-white hover:text-[#f39c12] transition-colors fade-in">
                             <i class="bi bi-box-arrow-right"></i> Logout
                         </a>
                     </div>
@@ -217,14 +247,11 @@
                         </div>
                         <div class="flex space-x-4">
                             <button type="submit"
-                                class="px-6 py-3 bg-[#3176bf] text-white rounded-lg hover:bg-[#4d8bcc] transition-colors">
+                                class="px-6 py-3 bg-[#f39c12] text-white rounded-lg hover:bg-[#e67e22] transition-colors">
                                 Add Product
                             </button>
-
                         </div>
                     </form>
-
-
                 </div>
             </div>
         </div>
@@ -296,8 +323,6 @@
             </div>
         </div>
     </div>
-
-
 
     <script>
         // Mobile Menu Toggle

@@ -14,8 +14,20 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden; /* Prevent horizontal scroll */
-            background: url('home.png') no-repeat center center fixed;
-            background-size: cover;
+            background: linear-gradient(135deg, #2c3e50 0%, #4a4a4a 50%, #f39c12 100%);
+            background-attachment: fixed;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, 
+                #1a2a3a 0%, 
+                #2c3e50 25%, 
+                #4a4a4a 50%, 
+                #f39c12 75%, 
+                #e67e22 100%
+            );
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
         }
 
         .btn-hover:hover {
@@ -33,12 +45,24 @@
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
 
     <!-- Header -->
-    <header class="fixed w-full top-0 z-50 bg-[#1e4b7b] shadow-md transition-transform duration-300" id="mainHeader">
+    <header class="fixed w-full top-0 z-50 bg-[#2c3e50] shadow-md transition-transform duration-300" id="mainHeader">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-20">
                 <div class="flex items-center">
@@ -70,7 +94,7 @@
                     <a href="#services" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Services
                         <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="#contact" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Contact
+                    <a href="#footer" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Contact
                         <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-500 transition-all duration-300 group-hover:w-full"></span>
                     </a>
                     <a href="admin.html" class="text-white hover:text-blue-200 transition-colors relative group fade-in">Admin
@@ -79,14 +103,14 @@
                 </nav>
 
                 <!-- Mobile Navigation -->
-                <div id="mobileMenu" class="hidden md:hidden fixed top-20 left-0 right-0 bg-[#2b6777] w-full z-50">
+                <div id="mobileMenu" class="hidden md:hidden fixed top-20 left-0 right-0 bg-[#2c3e50] w-full z-50">
                     <div class="container mx-auto px-4 py-4 space-y-4">
-                        <a href="#home" class="block text-white hover:text-gray-300 fade-in">Home</a>
-                        <a href="products.html" class="block text-white hover:text-gray-300 fade-in">Products</a>
-                        <a href="#about" class="block text-white hover:text-gray-300 fade-in">About</a>
-                        <a href="#services" class="block text-white hover:text-gray-300 fade-in">Services</a>
-                        <a href="#contact" class="block text-white hover:text-gray-300 fade-in">Contact</a>
-                        <a href="admin.html" class="block text-white hover:text-gray-300 fade-in">Admin</a>
+                        <a href="#home" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Home</a>
+                        <a href="products.html" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Products</a>
+                        <a href="#about" class="block text-white hover:text-[#f39c12] transition-colors fade-in">About</a>
+                        <a href="#services" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Services</a>
+                        <a href="#footer" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Contact</a>
+                        <a href="admin.html" class="block text-white hover:text-[#f39c12] transition-colors fade-in">Admin</a>
                     </div>
                 </div>
             </div>
@@ -97,15 +121,16 @@
     <section id="home" class="gradient-bg pt-32 pb-20">
         <div class="container mx-auto px-4">
             <div class="text-center">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 fade-in" style="animation-delay: 0.2s;">Welcome to Chemspace Pharmaceuticals</h1>
-                <p class="text-xl text-white mb-8 fade-in" style="animation-delay: 0.4s;">Your one-stop solution for custom chemical synthesis and bulk supply</p>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 fade-in" style="animation-delay: 0.2s; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Welcome to Chemspace Pharmaceuticals</h1>
+                
+                <p class="text-xl text-white mb-8 fade-in" style="animation-delay: 0.4s; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">Your one-stop solution for custom chemical synthesis and bulk supply</p>
 
                 <!-- Search Bar -->
                 <div class="max-w-2xl mx-auto fade-in" style="animation-delay: 0.6s;">
                     <div class="flex flex-col md:flex-row gap-4">
                         <input type="text" placeholder="Search by CAS No or Product Name"
-                               class="flex-1 px-6 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-[#52ab98] shadow-md">
-                        <button class="px-8 py-3 bg-[#3176bf] text-white rounded-full hover:bg-[#4d8bcc] transition-colors btn-hover shadow-md">
+                               class="flex-1 px-6 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-[#f39c12] shadow-md bg-white/90 backdrop-blur-sm">
+                        <button class="px-8 py-3 bg-[#f39c12] text-white rounded-full hover:bg-[#e67e22] transition-colors btn-hover shadow-md">
                             <i class="bi bi-search mr-2"></i>Search
                         </button>
                     </div>
@@ -115,38 +140,38 @@
     </section>
 
 <!-- About Section -->
-<section id="about" class="py-20 bg-gray-100">
+<section id="about" class="py-20 bg-gradient-to-b from-[#f5f5f5] to-[#f8f9fa]">
     <div class="container mx-auto px-4 flex justify-center">
         <!-- Information Box -->
-        <div class="bg-white shadow-lg rounded-xl p-8 w-full fade-in relative overflow-hidden">
+        <div class="bg-white/90 shadow-lg rounded-xl p-8 w-full fade-in relative overflow-hidden backdrop-blur-sm">
             <div class="relative z-10">
-                <h2 class="text-4xl font-bold text-center text-gray-800 mb-6">About Chemspace Pharmaceuticals Pvt. Ltd.</h2>
-                <p class="text-lg text-gray-600 leading-relaxed text-center mb-6">
-                    Founded in 2023, <strong>Chemspace Pharmaceuticals Pvt. Ltd.</strong> is dedicated to innovating the pharmaceutical landscape through the manufacturing and supply of high-quality Active Pharmaceutical Ingredients (APIs), Key Starting Materials (KSM) and Intermediates. Our commitment to excellence drives us to meet the diverse needs of our global clientele.
+                <h2 class="text-4xl font-bold text-center text-[#2c3e50] mb-6">About Chemspace Pharmaceuticals Pvt. Ltd.</h2>
+                <p class="text-lg text-[#4a4a4a] leading-relaxed text-center mb-6">
+                    Founded in 2023, <strong class="text-[#f39c12]">Chemspace Pharmaceuticals Pvt. Ltd.</strong> is dedicated to innovating the pharmaceutical landscape through the manufacturing and supply of high-quality Active Pharmaceutical Ingredients (APIs), Key Starting Materials (KSM) and Intermediates. Our commitment to excellence drives us to meet the diverse needs of our global clientele.
                 </p>
 
                 <div class="mt-8">
-                    <h3 class="text-3xl font-semibold text-[#1e4b7b] text-center">Our Vision</h3>
-                    <p class="text-lg text-gray-600 leading-relaxed text-center mt-2">
+                    <h3 class="text-3xl font-semibold text-[#2c3e50] text-center">Our Vision</h3>
+                    <p class="text-lg text-[#4a4a4a] leading-relaxed text-center mt-2">
                         We aspire to be a leader in the pharmaceutical industry, recognized globally for our innovative solutions and unwavering commitment to quality.
                     </p>
                 </div>
 
                 <div class="mt-8">
-                    <h3 class="text-3xl font-semibold text-[#1e4b7b] text-center">Our Commitment</h3>
-                    <p class="text-lg text-gray-600 leading-relaxed text-center mt-2">
+                    <h3 class="text-3xl font-semibold text-[#2c3e50] text-center">Our Commitment</h3>
+                    <p class="text-lg text-[#4a4a4a] leading-relaxed text-center mt-2">
                         At Chemspace Pharmaceuticals, we prioritize customer satisfaction by delivering exceptional service, timely deliveries, and customized solutions that adapt to the evolving needs of our clients.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <div class="p-6 bg-gray-50 rounded-lg text-center hover:scale-105 transition-transform duration-300 animate-bounce">
-                        <h3 class="text-2xl font-semibold text-[#2b6777] mb-2">18+ Years</h3>
-                        <p class="text-gray-600 text-lg">Industry Experience</p>
+                    <div class="p-6 bg-gradient-to-r from-[#2c3e50] to-[#4a4a4a] rounded-lg text-center hover:scale-105 transition-transform duration-300 animate-bounce">
+                        <h3 class="text-2xl font-semibold text-white mb-2">18+ Years</h3>
+                        <p class="text-gray-200 text-lg">Industry Experience</p>
                     </div>
-                    <div class="p-6 bg-gray-50 rounded-lg text-center hover:scale-105 transition-transform duration-300 animate-bounce">
-                        <h3 class="text-2xl font-semibold text-[#2b6777] mb-2">100+</h3>
-                        <p class="text-gray-600 text-lg">Products Delivered</p>
+                    <div class="p-6 bg-gradient-to-r from-[#f39c12] to-[#e67e22] rounded-lg text-center hover:scale-105 transition-transform duration-300 animate-bounce">
+                        <h3 class="text-2xl font-semibold text-white mb-2">100+</h3>
+                        <p class="text-gray-200 text-lg">Products Delivered</p>
                     </div>
                 </div>
             </div>
@@ -155,7 +180,7 @@
 </section>
 
 <!-- Image Slider Section -->
-<section class="py-16 bg-gray-50">
+<section class="py-16 bg-gradient-to-b from-[#f8f9fa] to-[#f5f5f5]">
     <div class="container mx-auto px-4">
         <div class="relative overflow-hidden rounded-xl shadow-xl">
             <div id="slider" class="flex transition-transform duration-500 ease-in-out">
@@ -250,39 +275,39 @@ img:hover {
 
 
     <!-- Services Section -->
-    <section id="services" class="py-20 bg-gray-100">
+    <section id="services" class="py-20 bg-gradient-to-b from-[#f5f5f5] to-[#f8f9fa]">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 fade-in">Our Services</h2>
+            <h2 class="text-3xl font-bold text-center text-[#2c3e50] mb-12 fade-in">Our Services</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in">
-                    <i class="bi bi-thermometer text-4xl text-[#2b6777] mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-4">Custom Synthesis</h3>
-                    <p class="text-gray-600">Tailored solutions to meet your specific chemical needs with precision and care.</p>
+                <div class="bg-white/90 p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in backdrop-blur-sm">
+                    <i class="bi bi-thermometer text-4xl text-[#2c3e50] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4 text-[#2c3e50]">Custom Synthesis</h3>
+                    <p class="text-[#4a4a4a]">Tailored solutions to meet your specific chemical needs with precision and care.</p>
                 </div>
-                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in" style="animation-delay: 0.2s;">
-                    <i class="bi bi-box-seam text-4xl text-[#2b6777] mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-4">Bulk Supply</h3>
-                    <p class="text-gray-600">Reliable and timely delivery of bulk chemicals for your business needs.</p>
+                <div class="bg-white/90 p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in backdrop-blur-sm" style="animation-delay: 0.2s;">
+                    <i class="bi bi-box-seam text-4xl text-[#2c3e50] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4 text-[#2c3e50]">Bulk Supply</h3>
+                    <p class="text-[#4a4a4a]">Reliable and timely delivery of bulk chemicals for your business needs.</p>
                 </div>
-                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in" style="animation-delay: 0.4s;">
-                    <i class="bi bi-shield-check text-4xl text-[#2b6777] mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-4">Quality Control</h3>
-                    <p class="text-gray-600">Rigorous testing and quality assurance for all our products.</p>
+                <div class="bg-white/90 p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in backdrop-blur-sm" style="animation-delay: 0.4s;">
+                    <i class="bi bi-shield-check text-4xl text-[#2c3e50] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4 text-[#2c3e50]">Quality Control</h3>
+                    <p class="text-[#4a4a4a]">Rigorous testing and quality assurance for all our products.</p>
                 </div>
-                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in" style="animation-delay: 0.6s;">
-                    <i class="bi bi-graph-up text-4xl text-[#2b6777] mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-4">Research & Development</h3>
-                    <p class="text-gray-600">Cutting-edge research facilities for developing innovative pharmaceutical solutions.</p>
+                <div class="bg-white/90 p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in backdrop-blur-sm" style="animation-delay: 0.6s;">
+                    <i class="bi bi-graph-up text-4xl text-[#2c3e50] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4 text-[#2c3e50]">Research & Development</h3>
+                    <p class="text-[#4a4a4a]">Cutting-edge research facilities for developing innovative pharmaceutical solutions.</p>
                 </div>
-                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in" style="animation-delay: 0.8s;">
-                    <i class="bi bi-file-earmark-text text-4xl text-[#2b6777] mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-4">Regulatory Support</h3>
-                    <p class="text-gray-600">Comprehensive assistance with regulatory compliance and documentation.</p>
+                <div class="bg-white/90 p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in backdrop-blur-sm" style="animation-delay: 0.8s;">
+                    <i class="bi bi-file-earmark-text text-4xl text-[#2c3e50] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4 text-[#2c3e50]">Regulatory Support</h3>
+                    <p class="text-[#4a4a4a]">Comprehensive assistance with regulatory compliance and documentation.</p>
                 </div>
-                <div class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in" style="animation-delay: 1s;">
-                    <i class="bi bi-people text-4xl text-[#2b6777] mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-4">Technical Consultation</h3>
-                    <p class="text-gray-600">Expert guidance and technical support for your pharmaceutical projects.</p>
+                <div class="bg-white/90 p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow fade-in backdrop-blur-sm" style="animation-delay: 1s;">
+                    <i class="bi bi-people text-4xl text-[#2c3e50] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-4 text-[#2c3e50]">Technical Consultation</h3>
+                    <p class="text-[#4a4a4a]">Expert guidance and technical support for your pharmaceutical projects.</p>
                 </div>
             </div>
         </div>
@@ -319,27 +344,27 @@ img:hover {
     </section>
 -->
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
+    <footer id="footer" class="bg-gradient-to-b from-[#2c3e50] to-[#1a252f] text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-3 gap-8 mb-8">
                 <div>
-                    <h3 class="text-xl font-semibold mb-4 fade-in">Chemspace Pharmaceuticals</h3>
-                    <p class="text-gray-400 fade-in">Your one-stop solution for custom chemical synthesis and bulk supply</p>
+                    <h3 class="text-xl font-semibold mb-4 fade-in text-[#f39c12]">Chemspace Pharmaceuticals</h3>
+                    <p class="text-gray-300 fade-in">Your one-stop solution for custom chemical synthesis and bulk supply</p>
                 </div>
                 <div>
-                    <h3 class="text-xl font-semibold mb-4 fade-in"  style="animation-delay: 0.2s;">Location</h3>
-                    <p class="text-gray-400 fade-in"  style="animation-delay: 0.2s;">Gat no. 887, Mugawade Village, Taluka Mulshi, Pune 412115. Maharashtra, India</p>
+                    <h3 class="text-xl font-semibold mb-4 fade-in text-[#f39c12]" style="animation-delay: 0.2s;">Location</h3>
+                    <p class="text-gray-300 fade-in" style="animation-delay: 0.2s;">Gat no. 887, Mugawade Village, Taluka Mulshi, Pune 412115. Maharashtra, India</p>
                 </div>
                 <div>
-                    <h3 class="text-xl font-semibold mb-4 fade-in"  style="animation-delay: 0.4s;">Connect With Us</h3>
+                    <h3 class="text-xl font-semibold mb-4 fade-in text-[#f39c12]" style="animation-delay: 0.4s;">Connect With Us</h3>
                     <div class="flex space-x-4">
-                        <a href="mailto:sameerkadam@chemspacepharma.in" class="hover:text-blue-200 fade-in"  style="animation-delay: 0.4s;">
-                            <i class="bi bi-envelope"></i> <span class="text-gray-400">info@chemspacepharma.in</span>
+                        <a href="mailto:sameerkadam@chemspacepharma.in" class="hover:text-[#f39c12] fade-in" style="animation-delay: 0.4s;">
+                            <i class="bi bi-envelope"></i> <span class="text-gray-300">info@chemspacepharma.in</span>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center">
+            <div class="border-t border-gray-700 pt-8 text-center">
                 <p class="text-gray-400 fade-in">&copy; 2025 Chemspace Pharmaceuticals. All rights reserved.</p>
             </div>
         </div>
