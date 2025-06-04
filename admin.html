@@ -189,6 +189,114 @@
             /* Red color for delete */
             color: white;
         }
+
+        table {
+            table-layout: fixed;
+            width: auto;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            word-wrap: break-word;
+            overflow: hidden;
+            text-align: center;
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        /* Set specific column widths */
+        table th:nth-child(1),
+        table td:nth-child(1) {
+            width: 5%;
+        }
+
+        /* ID */
+        table th:nth-child(2),
+        table td:nth-child(2) {
+            width: 40%;
+        }
+
+        /* Name */
+        table th:nth-child(3),
+        table td:nth-child(3) {
+            width: 15%;
+        }
+
+        /* CAS */
+        table th:nth-child(4),
+        table td:nth-child(4) {
+            width: 15%;
+        }
+
+        /* Category */
+        table th:nth-child(5),
+        table td:nth-child(5) {
+            width: 10%;
+        }
+
+        /* Image */
+        table th:nth-child(6),
+        table td:nth-child(6) {
+            width: 100%;
+        }
+
+        /* Actions */
+
+        .table-controls {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-filter-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .table-search-input {
+            flex: 2;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .table-category-select {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        .table-clear-btn {
+            padding: 0.5rem 1rem;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .table-clear-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .table-results-info {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: #999;
+            font-style: italic;
+        }
     </style>
 </head>
 
@@ -331,7 +439,29 @@
     <div class="container mx-auto px-4 mt-6">
         <div class="bg-white rounded-lg shadow p-6">
             <h2 class="text-xl font-bold mb-6 text-[#1e4b7b]">Manage Products</h2>
+            <!-- Table Search and Filter Controls -->
+            <div class="table-controls">
+                <div class="search-filter-row">
+                    <input type="text" id="tableSearchInput" class="table-search-input"
+                        placeholder="Search products in table...">
+                    <select id="tableCategoryFilter" class="table-category-select">
+                        <option value="">All Categories</option>
+                        <option value="Active Pharmaceutical Ingredients">Active Pharmaceutical Ingredients</option>
+                        <option value="Intermediates">Intermediates</option>
+                        <option value="Fine Chemicals">Fine Chemicals</option>
+                        <option value="Impurities">Impurities</option>
+                        <option value="Dry Solvents">Dry Solvents</option>
+                        <option value="KSM">KSM</option>
+                    </select>
+                    <button id="tableClearFilter" class="table-clear-btn">Clear</button>
+                </div>
+                <div id="tableResultsInfo" class="table-results-info"></div>
+            </div>
 
+            <!-- No results message (initially hidden) -->
+            <div id="noResultsMessage" class="no-results" style="display: none;">
+                No products found matching your search criteria.
+            </div>
             <!-- Table for displaying products -->
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
@@ -341,7 +471,7 @@
                             <th class="py-2 px-4 border">Product Name</th>
                             <th class="py-2 px-4 border">CAS Number</th>
                             <th class="py-2 px-4 border">Category</th>
-                            <th class="py-2 px-4 border">Description</th>
+                            <!-- <th class="py-2 px-4 border">Description</th> -->
                             <th class="py-2 px-4 border">Image</th>
                             <th class="py-2 px-4 border">Actions</th>
                         </tr>
@@ -547,7 +677,8 @@
                 <td class="py-2 px-4 border">${product.id}</td>
                 <td class="py-2 px-4 border">${product.name}</td>
                 <td class="py-2 px-4 border">${product.cas_number}</td>
-                <td class="py-2 px-4 border">${product.description}</td>
+                <td class="py-2 px-4 border">${product.category_name || 'N/A'}</td>
+               
                 <td class="py-2 px-4 border">
                     ${product.image !== "default.png" ? `<img src="uploads/${product.image}" class="h-12 w-12 rounded">` : "No Image"}
                 </td>
@@ -626,6 +757,71 @@
 
         // Run fetchProducts() when page loads
         document.addEventListener("DOMContentLoaded", fetchProducts);
+        // Table search and filter elements
+        const tableSearchInput = document.getElementById('tableSearchInput');
+        const tableCategoryFilter = document.getElementById('tableCategoryFilter');
+        const tableClearFilter = document.getElementById('tableClearFilter');
+        const tableResultsInfo = document.getElementById('tableResultsInfo');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+        const productsTable = document.querySelector('table');
+
+        // Table search and filter functionality
+        function filterTable() {
+            const searchTerm = tableSearchInput.value.toLowerCase();
+            const selectedCategory = tableCategoryFilter.value.toLowerCase();
+            const rows = document.querySelectorAll('#productsTableBody tr');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length === 0) return; // Skip if no cells (empty row)
+
+                const productName = cells[1].textContent.toLowerCase();
+                const casNumber = cells[2].textContent.toLowerCase();
+                const category = cells[3].textContent.toLowerCase();
+                const description = cells[4].textContent.toLowerCase();
+
+                // Check if row matches search term
+                const matchesSearch = searchTerm === '' ||
+                    productName.includes(searchTerm) ||
+                    casNumber.includes(searchTerm) ||
+                    description.includes(searchTerm);
+
+                // Check if row matches category filter
+                const matchesCategory = selectedCategory === '' ||
+                    category.includes(selectedCategory);
+
+                // Show/hide row based on both conditions
+                if (matchesSearch && matchesCategory) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Update results info
+            tableResultsInfo.textContent = `Showing ${visibleCount} of ${rows.length} products`;
+
+            // Show/hide no results message
+            if (visibleCount === 0 && rows.length > 0) {
+                noResultsMessage.style.display = 'block';
+                productsTable.style.display = 'none';
+            } else {
+                noResultsMessage.style.display = 'none';
+                productsTable.style.display = 'table';
+            }
+        }
+
+        // Event listeners for search and filter
+        tableSearchInput.addEventListener('input', filterTable);
+        tableCategoryFilter.addEventListener('change', filterTable);
+
+        tableClearFilter.addEventListener('click', function () {
+            tableSearchInput.value = '';
+            tableCategoryFilter.value = '';
+            filterTable();
+        });
 
     </script>
 </body>
