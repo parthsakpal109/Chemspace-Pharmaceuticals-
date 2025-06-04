@@ -293,25 +293,39 @@
                                     required>
                             </div>
                         </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">Description</label>
-                            <textarea rows="4" name="description"
-                                class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]"></textarea>
+                        <div class="form-group">
+                            <label for="category_name">Category</label>
+                            <select id="category_name" name="category_name" required>
+                                <option value="">Select Category</option>
+                                <option value="Active Pharmaceutical Ingredients">Active Pharmaceutical Ingredients
+                                </option>
+                                <option value="Intermediates">Intermediates</option>
+                                <option value="Fine Chemicals">Fine Chemicals</option>
+                                <option value="Impurities">Impurities</option>
+                                <option value="Dry Solvents">Dry Solvents</option>
+                                <option value="KSM">KSM</option>
+                            </select>
                         </div>
-                        <div>
-                            <label class="block text-gray-700 mb-2">Product Image</label>
-                            <input type="file" name="image" accept="image/*" class="w-full mb-4">
-                        </div>
-                        <div class="flex space-x-4">
-                            <button type="submit"
-                                class="px-6 py-3 bg-[#f39c12] text-white rounded-lg hover:bg-[#e67e22] transition-colors">
-                                Add Product
-                            </button>
-                        </div>
-                    </form>
                 </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Description</label>
+                    <textarea rows="4" name="description"
+                        class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]"></textarea>
+                </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Product Image</label>
+                    <input type="file" name="image" accept="image/*" class="w-full mb-4">
+                </div>
+                <div class="flex space-x-4">
+                    <button type="submit"
+                        class="px-6 py-3 bg-[#f39c12] text-white rounded-lg hover:bg-[#e67e22] transition-colors">
+                        Add Product
+                    </button>
+                </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
     <!-- Product Table -->
     <div class="container mx-auto px-4 mt-6">
@@ -326,6 +340,7 @@
                             <th class="py-2 px-4 border">ID</th>
                             <th class="py-2 px-4 border">Product Name</th>
                             <th class="py-2 px-4 border">CAS Number</th>
+                            <th class="py-2 px-4 border">Category</th>
                             <th class="py-2 px-4 border">Description</th>
                             <th class="py-2 px-4 border">Image</th>
                             <th class="py-2 px-4 border">Actions</th>
@@ -420,7 +435,7 @@
         });
 
         async function checkAdminSession() {
-            let response = await fetch("admin_check.php");
+            let response = await fetch("session_check.php");
             let result = await response.json();
 
             if (result.status === "unauthorized") {
@@ -447,6 +462,7 @@
                 <td class="py-2 px-4 border">${product.id}</td>
                 <td class="py-2 px-4 border">${product.name}</td>
                 <td class="py-2 px-4 border">${product.cas_number}</td>
+                <td class="py-2 px-4 border">${product.category_name || 'N/A'}</td>
                 <td class="py-2 px-4 border">${product.description}</td>
                 <td class="py-2 px-4 border">
                     ${product.image ? `<img src="uploads/${product.image}" alt="Product Image" class="h-12 w-12 rounded">` : "No Image"}
