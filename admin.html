@@ -74,7 +74,6 @@
 
         .nav-link:hover span {
             width: 100%;
-            /* Full width on hover */
         }
 
         /* Modal styles */
@@ -180,13 +179,11 @@
 
         .edit-btn {
             background-color: #4CAF50;
-            /* Same green color as add product button */
             color: white;
         }
 
         .delete-btn {
             background-color: #f44336;
-            /* Red color for delete */
             color: white;
         }
 
@@ -211,37 +208,30 @@
             width: 5%;
         }
 
-        /* ID */
         table th:nth-child(2),
         table td:nth-child(2) {
             width: 40%;
         }
 
-        /* Name */
         table th:nth-child(3),
         table td:nth-child(3) {
             width: 15%;
         }
 
-        /* CAS */
         table th:nth-child(4),
         table td:nth-child(4) {
             width: 15%;
         }
 
-        /* Category */
         table th:nth-child(5),
         table td:nth-child(5) {
             width: 10%;
         }
 
-        /* Image */
         table th:nth-child(6),
         table td:nth-child(6) {
             width: 100%;
         }
-
-        /* Actions */
 
         .table-controls {
             background-color: white;
@@ -414,27 +404,27 @@
                                 <option value="KSM">KSM</option>
                             </select>
                         </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Description</label>
+                            <textarea rows="4" name="description"
+                                class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Product Image</label>
+                            <input type="file" name="image" accept="image/*" class="w-full mb-4">
+                        </div>
+                        <div class="flex space-x-4">
+                            <button type="submit"
+                                class="px-6 py-3 bg-[#f39c12] text-white rounded-lg hover:bg-[#e67e22] transition-colors">
+                                Add Product
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Description</label>
-                    <textarea rows="4" name="description"
-                        class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-[#52ab98]"></textarea>
-                </div>
-                <div>
-                    <label class="block text-gray-700 mb-2">Product Image</label>
-                    <input type="file" name="image" accept="image/*" class="w-full mb-4">
-                </div>
-                <div class="flex space-x-4">
-                    <button type="submit"
-                        class="px-6 py-3 bg-[#f39c12] text-white rounded-lg hover:bg-[#e67e22] transition-colors">
-                        Add Product
-                    </button>
-                </div>
-                </form>
             </div>
         </div>
     </div>
-    </div>
+
     <!-- Product Table -->
     <div class="container mx-auto px-4 mt-6">
         <div class="bg-white rounded-lg shadow p-6">
@@ -462,6 +452,7 @@
             <div id="noResultsMessage" class="no-results" style="display: none;">
                 No products found matching your search criteria.
             </div>
+
             <!-- Table for displaying products -->
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
@@ -471,7 +462,6 @@
                             <th class="py-2 px-4 border">Product Name</th>
                             <th class="py-2 px-4 border">CAS Number</th>
                             <th class="py-2 px-4 border">Category</th>
-                            <!-- <th class="py-2 px-4 border">Description</th> -->
                             <th class="py-2 px-4 border">Image</th>
                             <th class="py-2 px-4 border">Actions</th>
                         </tr>
@@ -488,8 +478,8 @@
     <div id="editProductModal" class="modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="close">&times;</span>
                 <h2 class="text-xl font-bold mb-6 text-[#1e4b7b]">Edit Product</h2>
+                <span class="close">&times;</span>
             </div>
             <div class="modal-body">
                 <form id="editProductForm">
@@ -536,18 +526,18 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Logout function (Now redirects to login page)
+        // Logout function
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
-                window.location.href = "logout.php"; // Redirect to the login page
+                window.location.href = "logout.php";
             }
         }
 
         // Form submission with AJAX
         document.getElementById("addProductForm").addEventListener("submit", async function (e) {
-            e.preventDefault(); // Prevent form from reloading
+            e.preventDefault();
 
-            let formData = new FormData(this); // Collect form data
+            let formData = new FormData(this);
 
             try {
                 let response = await fetch("add_product.php", {
@@ -556,139 +546,58 @@
                 });
 
                 let result = await response.text();
-                alert(result); // Show response message
-                this.reset(); // Reset form after submission
+                alert(result);
+                this.reset();
+                fetchProducts(); // Refresh table after adding
             } catch (error) {
                 console.error("Error:", error);
                 alert("Failed to add product.");
             }
         });
 
+        // Session check
         async function checkAdminSession() {
-            let response = await fetch("session_check.php");
-            let result = await response.json();
+            try {
+                let response = await fetch("session_check.php");
+                let result = await response.json();
 
-            if (result.status === "unauthorized") {
-                window.location.href = "admin_login.html"; // Redirect to login page
+                if (result.status === "unauthorized") {
+                    window.location.href = "admin_login.html";
+                }
+            } catch (error) {
+                console.error("Session check error:", error);
             }
         }
-
-        // Run session check on page load
-        document.addEventListener("DOMContentLoaded", checkAdminSession);
-
 
         // Fetch and display products
-        async function fetchProducts() {
-            try {
-                let response = await fetch("fetch_products.php"); // Call the PHP script
-                let products = await response.json();
-
-                let tableBody = document.getElementById("productsTableBody");
-                tableBody.innerHTML = ""; // Clear previous content
-
-                products.forEach(product => {
-                    let row = document.createElement("tr");
-                    row.innerHTML = `
-                <td class="py-2 px-4 border">${product.id}</td>
-                <td class="py-2 px-4 border">${product.name}</td>
-                <td class="py-2 px-4 border">${product.cas_number}</td>
-                <td class="py-2 px-4 border">${product.category_name || 'N/A'}</td>
-                <td class="py-2 px-4 border">${product.description}</td>
-                <td class="py-2 px-4 border">
-                    ${product.image ? `<img src="uploads/${product.image}" alt="Product Image" class="h-12 w-12 rounded">` : "No Image"}
-                </td>
-                <td class="py-2 px-4 border">
-                    <button class="bg-yellow-500 text-white px-3 py-1 rounded" onclick="editProduct(${product.id})">Edit</button>
-                    <button class="bg-red-500 text-white px-3 py-1 rounded ml-2" onclick="deleteProduct(${product.id})">Delete</button>
-                </td>
-            `;
-                    tableBody.appendChild(row);
-                });
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        }
-
-        // Function to delete product
-        async function deleteProduct(productId) {
-            if (confirm("Are you sure you want to delete this product?")) {
-                try {
-                    let response = await fetch(`delete_product.php?id=${productId}`, { method: "GET" });
-                    let result = await response.json();
-                    alert(result.message);
-                    fetchProducts(); // Refresh table
-                } catch (error) {
-                    console.error("Error deleting product:", error);
-                }
-            }
-        }
-
-        // Function to handle editing (Currently placeholder)
-        function editProduct(productId) {
-            window.location.href = `edit_product.php?id=${productId}`;
-        }
-
-        function editProduct(productId) {
-            // Fetch product data
-            fetch(`fetch_products.php?id=${productId}`)
-                .then(response => response.json())
-                .then(product => {
-                    // Populate form fields
-                    document.getElementById('edit_product_id').value = product.id;
-                    document.getElementById('edit_name').value = product.name;
-                    document.getElementById('edit_cas_number').value = product.cas_number;
-                    document.getElementById('edit_description').value = product.description;
-
-                    // Show current image if exists
-                    const imageContainer = document.getElementById('current_image_container');
-                    if (product.image && product.image !== 'default.png') {
-                        imageContainer.innerHTML = `<p>Current image:</p><img src="uploads/${product.image}" alt="Current Product Image" class="h-12 w-12 rounded">`;
-                    } else {
-                        imageContainer.innerHTML = '<p>No image available</p>';
-                    }
-
-                    // Show modal
-                    document.getElementById('editProductModal').style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Error fetching product:', error);
-                    alert('Failed to load product data');
-                });
-        }
-
-
-
-        // Run fetchProducts() on page load
-        document.addEventListener("DOMContentLoaded", fetchProducts);
-
-
-        // Fetch and display products in the admin table
         async function fetchProducts() {
             try {
                 let response = await fetch("fetch_products.php");
                 let products = await response.json();
 
                 let tableBody = document.getElementById("productsTableBody");
-                tableBody.innerHTML = ""; // Clear table before inserting
+                tableBody.innerHTML = "";
 
                 products.forEach(product => {
                     let row = document.createElement("tr");
                     row.innerHTML = `
-                <td class="py-2 px-4 border">${product.id}</td>
-                <td class="py-2 px-4 border">${product.name}</td>
-                <td class="py-2 px-4 border">${product.cas_number}</td>
-                <td class="py-2 px-4 border">${product.category_name || 'N/A'}</td>
-               
-                <td class="py-2 px-4 border">
-                    ${product.image !== "default.png" ? `<img src="uploads/${product.image}" class="h-12 w-12 rounded">` : "No Image"}
-                </td>
-                <td class="actions-column py-2 px-4 border">
-                    <button class="edit-btn bg-yellow-500 text-white px-3 py-1 rounded" onclick="editProduct(${product.id})">Edit</button>
-                    <button class="delete-btn bg-red-500 text-white px-3 py-1 rounded ml-2" onclick="deleteProduct(${product.id})">Delete</button>
-                </td>
-            `;
+                        <td class="py-2 px-4 border">${product.id}</td>
+                        <td class="py-2 px-4 border">${product.name}</td>
+                        <td class="py-2 px-4 border">${product.cas_number}</td>
+                        <td class="py-2 px-4 border">${product.category_name || 'N/A'}</td>
+                        <td class="py-2 px-4 border">
+                            ${product.image !== "default.png" ? `<img src="uploads/${product.image}" class="h-12 w-12 rounded">` : "No Image"}
+                        </td>
+                        <td class="actions-column py-2 px-4 border">
+                            <button class="edit-btn bg-yellow-500 text-white px-3 py-1 rounded" onclick="editProduct(${product.id})">Edit</button>
+                            <button class="delete-btn bg-red-500 text-white px-3 py-1 rounded ml-2" onclick="deleteProduct(${product.id})">Delete</button>
+                        </td>
+                    `;
                     tableBody.appendChild(row);
                 });
+
+                // Initialize filter after loading products
+                filterTable();
             } catch (error) {
                 console.error("Error fetching products:", error);
             }
@@ -701,21 +610,103 @@
                     let response = await fetch(`delete_product.php?id=${productId}`, { method: "GET" });
                     let result = await response.json();
                     alert(result.success || result.error);
-                    fetchProducts(); // Reload table
+                    fetchProducts();
                 } catch (error) {
                     console.error("Error deleting product:", error);
                 }
             }
         }
+
+        // Edit product function
+        function editProduct(productId) {
+            console.log('Editing product ID:', productId); // Debug line
+
+            fetch(`fetch_products.php?id=${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Received data:', data); // Debug line
+
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                        return;
+                    }
+
+                    // Populate form fields with null checks
+                    document.getElementById('edit_product_id').value = data.id || '';
+                    document.getElementById('edit_name').value = data.name || '';
+                    document.getElementById('edit_cas_number').value = data.cas_number || '';
+                    document.getElementById('edit_description').value = data.description || '';
+
+                    // Show modal
+                    document.getElementById('editProductModal').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    alert('Failed to load product data');
+                });
+        }
+
+
+        // Table search and filter functionality
+        const tableSearchInput = document.getElementById('tableSearchInput');
+        const tableCategoryFilter = document.getElementById('tableCategoryFilter');
+        const tableClearFilter = document.getElementById('tableClearFilter');
+        const tableResultsInfo = document.getElementById('tableResultsInfo');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+        const productsTable = document.querySelector('table');
+
+        function filterTable() {
+            const searchTerm = tableSearchInput.value.toLowerCase();
+            const selectedCategory = tableCategoryFilter.value.toLowerCase();
+            const rows = document.querySelectorAll('#productsTableBody tr');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length === 0) return;
+
+                const productName = cells[1].textContent.toLowerCase();
+                const casNumber = cells[2].textContent.toLowerCase();
+                const category = cells[3].textContent.toLowerCase();
+
+                const matchesSearch = searchTerm === '' ||
+                    productName.includes(searchTerm) ||
+                    casNumber.includes(searchTerm);
+
+                const matchesCategory = selectedCategory === '' ||
+                    category.includes(selectedCategory);
+
+                if (matchesSearch && matchesCategory) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            tableResultsInfo.textContent = `Showing ${visibleCount} of ${rows.length} products`;
+
+            if (visibleCount === 0 && rows.length > 0) {
+                noResultsMessage.style.display = 'block';
+                productsTable.style.display = 'none';
+            } else {
+                noResultsMessage.style.display = 'none';
+                productsTable.style.display = 'table';
+            }
+        }
+
+        // Event listeners
         document.addEventListener('DOMContentLoaded', function () {
-            // Close modal when clicking X or Cancel button
+            checkAdminSession();
+            fetchProducts();
+
+            // Modal close handlers
             document.querySelectorAll('.close, .close-modal').forEach(element => {
                 element.addEventListener('click', function () {
                     document.getElementById('editProductModal').style.display = 'none';
                 });
             });
 
-            // Close modal when clicking outside the modal content
             window.addEventListener('click', function (event) {
                 const modal = document.getElementById('editProductModal');
                 if (event.target === modal) {
@@ -723,7 +714,7 @@
                 }
             });
 
-            // Handle edit form submission
+            // Edit form submission
             document.getElementById('editProductForm').addEventListener('submit', function (e) {
                 e.preventDefault();
 
@@ -736,10 +727,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
-                            // Show success message
                             alert(data.message);
-
-                            // Close modal and refresh product list
                             document.getElementById('editProductModal').style.display = 'none';
                             fetchProducts();
                         } else {
@@ -751,78 +739,16 @@
                         alert('Failed to update product');
                     });
             });
-        });
 
-
-
-        // Run fetchProducts() when page loads
-        document.addEventListener("DOMContentLoaded", fetchProducts);
-        // Table search and filter elements
-        const tableSearchInput = document.getElementById('tableSearchInput');
-        const tableCategoryFilter = document.getElementById('tableCategoryFilter');
-        const tableClearFilter = document.getElementById('tableClearFilter');
-        const tableResultsInfo = document.getElementById('tableResultsInfo');
-        const noResultsMessage = document.getElementById('noResultsMessage');
-        const productsTable = document.querySelector('table');
-
-        // Table search and filter functionality
-        function filterTable() {
-            const searchTerm = tableSearchInput.value.toLowerCase();
-            const selectedCategory = tableCategoryFilter.value.toLowerCase();
-            const rows = document.querySelectorAll('#productsTableBody tr');
-            let visibleCount = 0;
-
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                if (cells.length === 0) return; // Skip if no cells (empty row)
-
-                const productName = cells[1].textContent.toLowerCase();
-                const casNumber = cells[2].textContent.toLowerCase();
-                const category = cells[3].textContent.toLowerCase();
-                const description = cells[4].textContent.toLowerCase();
-
-                // Check if row matches search term
-                const matchesSearch = searchTerm === '' ||
-                    productName.includes(searchTerm) ||
-                    casNumber.includes(searchTerm) ||
-                    description.includes(searchTerm);
-
-                // Check if row matches category filter
-                const matchesCategory = selectedCategory === '' ||
-                    category.includes(selectedCategory);
-
-                // Show/hide row based on both conditions
-                if (matchesSearch && matchesCategory) {
-                    row.style.display = '';
-                    visibleCount++;
-                } else {
-                    row.style.display = 'none';
-                }
+            // Search and filter event listeners
+            tableSearchInput.addEventListener('input', filterTable);
+            tableCategoryFilter.addEventListener('change', filterTable);
+            tableClearFilter.addEventListener('click', function () {
+                tableSearchInput.value = '';
+                tableCategoryFilter.value = '';
+                filterTable();
             });
-
-            // Update results info
-            tableResultsInfo.textContent = `Showing ${visibleCount} of ${rows.length} products`;
-
-            // Show/hide no results message
-            if (visibleCount === 0 && rows.length > 0) {
-                noResultsMessage.style.display = 'block';
-                productsTable.style.display = 'none';
-            } else {
-                noResultsMessage.style.display = 'none';
-                productsTable.style.display = 'table';
-            }
-        }
-
-        // Event listeners for search and filter
-        tableSearchInput.addEventListener('input', filterTable);
-        tableCategoryFilter.addEventListener('change', filterTable);
-
-        tableClearFilter.addEventListener('click', function () {
-            tableSearchInput.value = '';
-            tableCategoryFilter.value = '';
-            filterTable();
         });
-
     </script>
 </body>
 

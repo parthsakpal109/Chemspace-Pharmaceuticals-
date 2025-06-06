@@ -8,13 +8,39 @@ if ($conn->connect_error) {
     die(json_encode(["error" => "Database connection failed: " . $conn->connect_error]));
 }
 
-// Get filters from URL
+// Check if a specific product ID is requested
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $product_id = intval($_GET['id']);
+    
+    // Fetch single product with all required fields
+    $stmt = $conn->prepare("SELECT id, name, cas_number, description, image, category_id, category_name FROM products WHERE id = ?");
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $product = $result->fetch_assoc();
+        
+        // Handle NULL values
+        $product['name'] = $product['name'] ?? '';
+        $product['cas_number'] = $product['cas_number'] ?? '';
+        $product['description'] = $product['description'] ?? '';
+        $product['category_name'] = $product['category_name'] ?? '';
+        $product['image'] = $product['image'] ?? 'default.png';
+        
+        echo json_encode($product);
+    } else {
+        echo json_encode(["error" => "Product not found"]);
+    }
+    
+    $stmt->close();
+    $conn->close();
+    exit;
+}
+
+// Get filters from URL for all products
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 $category = isset($_GET['category']) ? trim($_GET['category']) : '';
-
-// Debug logging
-error_log("Search term: " . $search);
-error_log("Category filter: " . $category);
 
 // Base query
 $sql = "SELECT * FROM products";
@@ -38,13 +64,11 @@ if (!empty($category)) {
         $conditions[] = "category_id = ?";
         $params[] = intval($category);
         $types .= "i";
-        error_log("Filtering by category_id: " . intval($category));
     } else {
         // Category is a name
         $conditions[] = "category_name = ?";
         $params[] = $category;
         $types .= "s";
-        error_log("Filtering by category_name: " . $category);
     }
 }
 
@@ -54,8 +78,6 @@ if (!empty($conditions)) {
 }
 
 $sql .= " ORDER BY name";
-
-error_log("Final SQL: " . $sql);
 
 // Prepare statement
 $stmt = $conn->prepare($sql);
@@ -73,8 +95,6 @@ while ($row = $result->fetch_assoc()) {
     }
     $products[] = $row;
 }
-
-error_log("Found " . count($products) . " products");
 
 echo json_encode($products, JSON_PRETTY_PRINT);
 $stmt->close();
