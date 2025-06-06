@@ -495,6 +495,20 @@
                         <input type="text" id="edit_cas_number" name="cas_number" required>
                     </div>
 
+                    <!-- NEW: Category selection dropdown -->
+                    <div class="form-group">
+                        <label for="edit_category_name">Category</label>
+                        <select id="edit_category_name" name="category_name" required>
+                            <option value="">Select Category</option>
+                            <option value="Active Pharmaceutical Ingredients">Active Pharmaceutical Ingredients</option>
+                            <option value="Intermediates">Intermediates</option>
+                            <option value="Fine Chemicals">Fine Chemicals</option>
+                            <option value="Impurities">Impurities</option>
+                            <option value="Dry Solvents">Dry Solvents</option>
+                            <option value="KSM">KSM</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="edit_description">Description</label>
                         <textarea id="edit_description" name="description" required></textarea>
@@ -516,6 +530,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         // Mobile Menu Toggle
@@ -618,33 +633,48 @@
         }
 
         // Edit product function
-        function editProduct(productId) {
-            console.log('Editing product ID:', productId); // Debug line
+function editProduct(productId) {
+    fetch(`fetch_products.php?id=${productId}`)
+        .then(response => response.json())
+        .then(product => {
+            console.log('Product data:', product); // Debug line
+            
+            if (product.error) {
+                alert('Error: ' + product.error);
+                return;
+            }
+            
+            // Populate all form fields
+            document.getElementById('edit_product_id').value = product.id || '';
+            document.getElementById('edit_name').value = product.name || '';
+            document.getElementById('edit_cas_number').value = product.cas_number || '';
+            document.getElementById('edit_description').value = product.description || '';
+            
+            // NEW: Set the category dropdown value
+            const categorySelect = document.getElementById('edit_category_name');
+            if (product.category_name) {
+                categorySelect.value = product.category_name;
+            } else {
+                categorySelect.value = '';
+            }
 
-            fetch(`fetch_products.php?id=${productId}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Received data:', data); // Debug line
+            // Handle current image display
+            const imageContainer = document.getElementById('current_image_container');
+            if (product.image && product.image !== 'default.png') {
+                imageContainer.innerHTML = `<p>Current image:</p><img src="uploads/${product.image}" alt="Current Product Image" class="h-12 w-12 rounded">`;
+            } else {
+                imageContainer.innerHTML = '<p>No image available</p>';
+            }
 
-                    if (data.error) {
-                        alert('Error: ' + data.error);
-                        return;
-                    }
+            // Show modal
+            document.getElementById('editProductModal').style.display = 'block';
+        })
+        .catch(error => {
+            console.error('Error fetching product:', error);
+            alert('Failed to load product data');
+        });
+}
 
-                    // Populate form fields with null checks
-                    document.getElementById('edit_product_id').value = data.id || '';
-                    document.getElementById('edit_name').value = data.name || '';
-                    document.getElementById('edit_cas_number').value = data.cas_number || '';
-                    document.getElementById('edit_description').value = data.description || '';
-
-                    // Show modal
-                    document.getElementById('editProductModal').style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    alert('Failed to load product data');
-                });
-        }
 
 
         // Table search and filter functionality

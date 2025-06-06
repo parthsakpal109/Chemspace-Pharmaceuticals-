@@ -3,7 +3,6 @@ session_start();
 
 // Check if admin is logged in
 if (!isset($_SESSION["admin_id"])) {
-    // For AJAX requests, return error instead of redirecting
     header('Content-Type: application/json');
     echo json_encode(["status" => "error", "message" => "Not authorized"]);
     exit;
@@ -29,6 +28,7 @@ $product_id = intval($_POST['product_id']);
 $name = $_POST['name'] ?? '';
 $cas_number = $_POST['cas_number'] ?? '';
 $description = $_POST['description'] ?? '';
+$category_name = $_POST['category_name'] ?? ''; // NEW: Get category
 
 // Validate required fields
 if (empty($product_id) || empty($name) || empty($cas_number) || empty($description)) {
@@ -37,7 +37,21 @@ if (empty($product_id) || empty($name) || empty($cas_number) || empty($descripti
     exit;
 }
 
-// Get current product data to check if image needs updating
+// Get category_id from category_name
+$category_id = null;
+if (!empty($category_name)) {
+    $cat_stmt = $conn->prepare("SELECT id FROM categories WHERE category_name = ?");
+    $cat_stmt->bind_param("s", $category_name);
+    $cat_stmt->execute();
+    $cat_result = $cat_stmt->get_result();
+    if ($cat_result->num_rows > 0) {
+        $cat_row = $cat_result->fetch_assoc();
+        $category_id = $cat_row['id'];
+    }
+    $cat_stmt->close();
+}
+
+// Get current product data
 $stmt = $conn->prepare("SELECT image FROM products WHERE id = ?");
 $stmt->bind_param("i", $product_id);
 $stmt->execute();
@@ -56,7 +70,7 @@ $image_path = $current_product['image']; // Default to current image
 if (isset($_FILES['image']) && $_FILES['image']['size'] > 0) {
     $target_dir = "uploads/";
     $file_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-    $new_filename = uniqid() . '.' . $file_extension; // Generate unique filename
+    $new_filename = uniqid() . '.' . $file_extension;
     $target_file = $target_dir . $new_filename;
     
     // Check file type
@@ -89,12 +103,11 @@ if (isset($_FILES['image']) && $_FILES['image']['size'] > 0) {
     }
 }
 
-// Update product in database
-$stmt = $conn->prepare("UPDATE products SET name = ?, cas_number = ?, description = ?, image = ? WHERE id = ?");
-$stmt->bind_param("ssssi", $name, $cas_number, $description, $image_path, $product_id);
+// Update product in database including category
+$stmt = $conn->prepare("UPDATE products SET name = ?, cas_number = ?, description = ?, image = ?, category_id = ?, category_name = ? WHERE id = ?");
+$stmt->bind_param("ssssisi", $name, $cas_number, $description, $image_path, $category_id, $category_name, $product_id);
 
 if ($stmt->execute()) {
-    // Return success message for AJAX instead of redirecting
     header('Content-Type: application/json');
     echo json_encode(["status" => "success", "message" => "Product updated successfully"]);
 } else {
